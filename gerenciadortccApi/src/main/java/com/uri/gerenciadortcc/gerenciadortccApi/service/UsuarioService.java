@@ -13,9 +13,9 @@ public interface UsuarioService {
 
 	boolean validarCredenciaisADDUsuario(Usuario usuario);
 
-	Usuario autenticarLogin(String email, String senha);
-
 	int pegaIdUsuario(Usuario usuario);
+
+	Optional<Usuario> Login(String email, String senha);
 	
 	
 }

@@ -6,11 +6,11 @@ import org.springframework.stereotype.Repository;
 import com.uri.gerenciadortcc.gerenciadortccApi.model.entity.Usuario;
 
 @Repository
-public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
+public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
 
 	boolean existsByEmail(String Email);
 	
-	boolean existsByEmailAndSenha(String Email, String Senha);
+	Optional<Usuario> findByEmailAndSenha(String Email, String Senha);
 		
 	Optional<Usuario> findByEmail(String email);
 	

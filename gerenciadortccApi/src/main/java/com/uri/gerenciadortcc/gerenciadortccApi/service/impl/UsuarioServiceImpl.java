@@ -34,18 +34,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 	}
 
 	@Override
-	public Usuario autenticarLogin(String email, String senha) {
-		Optional<Usuario> usuario = repository.findByEmail(email);
-		if (!usuario.isPresent()){
-			throw new ErroAutenticacao("email não encontrado");	
-		}
-		if (!usuario.get().getSenha().equals(senha)) {
-			throw new ErroAutenticacao("senha inválida");
-		}
-		if (usuario.get().getVerificado() == 0) {
-			throw new ErroAutenticacao("usuario ainda não foi verificado pelo sistema");
-		}
-		return usuario.get();
+	public Optional<Usuario> Login(String email, String senha) {
+		return repository.findByEmailAndSenha(email, senha);
 	}
 
 	@Override
@@ -75,8 +65,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 				if (curso>=1) {
 					String cpf = usuario.getCpf();
 					if (cpf.length() == 11){
-						String formatoData = ("[0-9]+" + "/" + "[0-9]+" +"/" +"[0-9]+");
-						String datanasc = usuario.getDatanasc();
+						String formatoData = ("[0-9]+" + "-" + "[0-9]+" +"-" +"[0-9]+");
+						String datanasc = usuario.getDatanasc().toString();
 						if (datanasc.matches(formatoData) && datanasc.length()<=10 && datanasc.length()>5){
 							String senha = usuario.getSenha();
 							if (senha.length() > 7) {

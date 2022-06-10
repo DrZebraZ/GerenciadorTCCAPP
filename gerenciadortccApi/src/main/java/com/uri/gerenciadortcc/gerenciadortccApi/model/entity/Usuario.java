@@ -1,5 +1,7 @@
 package com.uri.gerenciadortcc.gerenciadortccApi.model.entity;
 
+import java.time.LocalDate;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,7 +36,7 @@ public class Usuario {
 	private String cpf;
 	
 	@Column(name = "datanasc")
-	private String datanasc;
+	private LocalDate datanasc;
 	
 	@Column(name = "email")
 	private String email;

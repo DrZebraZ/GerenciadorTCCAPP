@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import com.uri.gerenciadortcc.gerenciadortccApi.model.entity.Professor;
 
 @Repository
-public interface ProfessorRepository extends JpaRepository<Professor, Long>{
+public interface ProfessorRepository extends JpaRepository<Professor, Integer>{
 	
 	boolean existsByEmail(String Email);
 	

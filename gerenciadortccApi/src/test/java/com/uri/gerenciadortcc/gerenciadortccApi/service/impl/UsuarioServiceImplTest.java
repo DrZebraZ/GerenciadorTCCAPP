@@ -1,4 +1,6 @@
 package com.uri.gerenciadortcc.gerenciadortccApi.service.impl;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 import org.assertj.core.api.Assertions;
@@ -34,7 +36,7 @@ public class UsuarioServiceImplTest {
 	
 	@Test
 	public void deveValidarAFuncaoValidarCredenciaisADD_Usuario_Completo(){
-		Usuario user = Usuario.builder().Curso_idcurso(1).nome("Luis Guilherme").cpf("04598604026").datanasc("01/01/2001").email("teste@gmail.com").senha("12345678").build();
+		Usuario user = Usuario.builder().Curso_idcurso(1).nome("Luis Guilherme").cpf("04598604026").datanasc(LocalDate.parse("2001-01-02")).email("teste@gmail.com").senha("12345678").build();
 		
 		boolean validou = usuarioserviceimpl.validarCredenciaisADDUsuario(user);
 		
@@ -43,7 +45,7 @@ public class UsuarioServiceImplTest {
 	
 	@Test
 	public void deveValidarAFuncaoADDUsuarioEConfirmarQueFoiCriadoANotificacaoComOPedido(){
-		Usuario user = Usuario.builder().Curso_idcurso(1).nome("Luis Guilherme Andres").cpf("14598604026").datanasc("1/02/2022").email("teste2@gmail.com").senha("12345679").build();
+		Usuario user = Usuario.builder().Curso_idcurso(1).nome("Luis Guilherme Andres").cpf("14598604026").datanasc(LocalDate.parse("2001-01-02")).email("teste2@gmail.com").senha("12345679").build();
 		usuarioserviceimpl.salvarUsuario(user);
 		boolean verificaExistencia = false;
 		boolean salvouNotificacao = true;
@@ -63,10 +65,10 @@ public class UsuarioServiceImplTest {
 	
 	@Test
 	public void deveValidarAFuncaoAutenticarLogin() {
-		Usuario user = Usuario.builder().Curso_idcurso(1).nome("Luis Guilherme").cpf("04598604026").datanasc("1/02/2022").email("teste3@gmail.com").senha("12345679").verificado(1).build();
+		Usuario user = Usuario.builder().Curso_idcurso(1).nome("Luis Guilherme").cpf("04598604026").datanasc(LocalDate.parse("2001-12-31")).email("teste3@gmail.com").senha("12345679").verificado(1).build();
 		usuarioserviceimpl.salvarUsuario(user);
 		
-		Usuario usuario = usuarioserviceimpl.autenticarLogin(user.getEmail(), user.getSenha());
+		Optional<Usuario> usuario = usuarioserviceimpl.Login(user.getEmail(), user.getSenha());
 		boolean deu = true;
 		if (usuario.equals(null)) {
 			deu = false;

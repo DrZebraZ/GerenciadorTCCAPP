@@ -29,7 +29,7 @@ public class Notificacao {
 	@Id
 	@Column(name = "idnotificacao")
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
-	private int idnotificacao;
+	private long idnotificacao;
 	
 	@Column(name="data_notificacao")
 	private LocalDate data_notificacao;

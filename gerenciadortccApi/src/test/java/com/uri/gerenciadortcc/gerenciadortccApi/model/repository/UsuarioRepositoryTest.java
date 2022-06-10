@@ -35,7 +35,11 @@ public class UsuarioRepositoryTest {
 	public void deveAutenticarOLoginDeUmUsuarioComEmailESenha(){
 		Usuario user = Usuario.builder().nome("usuario2").email("usuario2@email.com").senha("teste2").Curso_idcurso(1).build();
 		repository.save(user);
-		boolean achou = repository.existsByEmailAndSenha("usuario2@email.com", "teste2");		
+		Optional<Usuario> usuario = repository.findByEmailAndSenha("usuario2@email.com", "teste2");		
+		boolean achou = true;
+		if (usuario.get().getEmail()!=user.getEmail()) {
+			achou = false;
+		}
 		Assertions.assertThat(achou).isTrue();
 	}
 		
