@@ -21,18 +21,15 @@ public class CursoServiceImpl implements CursoService{
 		super();
 		this.repository = repository;
 	}
-
+	
 	@Override
-	public ArrayList<cursoObject> prucuraCursos() {
-		ArrayList<Curso> lista1 = repository.findAll();
-		ArrayList<cursoObject> lista2 = new ArrayList<>();
-		for(int i=0; i<lista1.size();i++){
-			cursoObject curso = new cursoObject();
-			curso.setIdcurso(lista1.get(i).getIdcurso());
-			curso.setNomecurso(lista1.get(i).getNome());
-			lista2.add(curso);
-		}
-		return lista2;
+	public Curso addCurso(Curso curso) {
+		return repository.save(curso);
+	}
+	
+	@Override
+	public ArrayList<Curso> prucuraCursos() {	
+		return repository.findAll();
 		
 	}
 }
