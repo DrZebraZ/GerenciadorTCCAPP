@@ -1,7 +1,11 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css"
+import "react-datepicker/dist/react-datepicker.css";
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+import UsuarioService from '../app/service/UsuarioService';
+
 class Cadastro extends React.Component{
     state={
         email:'',
@@ -9,21 +13,40 @@ class Cadastro extends React.Component{
         cpf:'',
         dataNasc: '',
         nomeCompleto:'',
-        tipoUsuario:0
-
+        tipoUsuario:0,
+        curso:0,
+        listaCursos:[{label:'Selecione...',id:0},{label: 'Ciencias da Computacao',id:1}],
+    }
+    
+    constructor(){
+        super();
+        this.service = new UsuarioService();
     }
 
     cadastrar = () =>{
-        console.log("NOVO CADASTRO")
-        console.log('Nome:', this.state.nomeCompleto)
-        console.log('CPF: ', this.state.cpf)
-        console.log('Email:', this.state.email)
-        console.log('Senha: ', this.state.senha)
-        console.log('TipoUsuario: ', this.state.tipoUsuario)
-        console.log('DataNasc', this.state.dataNasc)
-
+        console.log(this.state.dataNasc)
+        this.service.cadastrarUsuario({
+            email: this.state.email,
+            nome: this.state.nomeCompleto,
+            cpf: this.state.cpf,
+            datanasc: this.state.dataNasc,
+            senha: this.state.senha,
+            curso_idcurso: this.state.curso,
+        })
+        .then( response => {
+            console.log(this.state.dataNasc)
+            console.log(this.state.email)
+            console.log(response.data)
+            console.log("CADASTROU")
+        })
+        .catch( erro => {
+            console.log(this.state.dataNasc)
+            console.log(this.state.email)
+            console.log("erro cadastro")
+            console.log(erro.response)
+        }) 
     }
-
+    
     render(){
         return(
             <>
@@ -36,23 +59,23 @@ class Cadastro extends React.Component{
                                 </div>
                                 <div className="form-floating mb-1 pt-1">
                                     <input value={this.state.nomeCompleto}
-                                        type="nome"
+                                        type="nomeCompleto"
                                         className="form-control" 
                                         id="floatingNome" 
-                                        placeholder="Nome Completo"
+                                        placeholder="NomeCompleto"
                                         onChange={e => this.setState({nomeCompleto: e.target.value})}
                                     />
-                                    <label for="floatingInput">Nome Completo</label>
+                                    <label htmlFor="floatingInput">Nome Completo</label>
                                 </div>
                                 <div className="form-floating mb-1 pt-1">
                                     <input value={this.state.cpf}
-                                        type="nome"
+                                        type="cpf"
                                         className="form-control" 
                                         id="floatingCPF"
                                         placeholder="CPF"
                                         onChange={e => this.setState({cpf: e.target.value})}
                                         />
-                                    <label for="floatingInput">CPF (apenas numeros)</label>
+                                    <label htmlFor="floatingInput">CPF (apenas numeros)</label>
                                 </div>
                                 <div className="form-floating mb-1 pt-1">
                                     <input value={this.state.email}
@@ -62,7 +85,7 @@ class Cadastro extends React.Component{
                                         placeholder="name@example.com"
                                         onChange={e => this.setState({email: e.target.value})}
                                         />
-                                    <label for="floatingInput">Email</label>
+                                    <label htmlFor="floatingInput">Email</label>
                                 </div>
                                 <div className="form-floating mb-1 pt-1">
                                     <input value={this.state.senha} 
@@ -72,26 +95,36 @@ class Cadastro extends React.Component{
                                         placeholder="Password"
                                         onChange={e => this.setState({senha: e.target.value})}
                                         />
-                                    <label for="floatingPassword">Senha</label>
+                                    <label htmlFor="floatingPassword">Senha</label>
+                                </div>
+                                <div className="form-floating mb-1 pt-1">
+                                    <Autocomplete
+                                        disablePortal
+                                        id="combo-box-demo"
+                                        options={this.state.listaCursos}
+                                        renderInput={(params) => <TextField {...params } className="form-control"  label="Curso"/>}
+                                        
+                                        onChange={(e, newCurso) => this.setState({curso: newCurso.id})}
+                                    />
                                 </div>
                                 <div className="row justify-content-center">
                                     <div className="row">
                                         <div className="col-6 mb-2 pt-2">
                                             <div className="form-check">
                                                 <input onChange={e => this.setState({tipoUsuario: "1"})} className="form-check-input" type="radio" name="flexRadioDefault" id="1"/>
-                                                <label class="form-check-label" for="flexRadioDefault1">
+                                                <label className="form-check-label" htmlFor="flexRadioDefault1">
                                                     Aluno
                                                 </label>
                                             </div>
                                             <div className="form-check">
                                                 <input onChange={e => this.setState({tipoUsuario: "2"})} className="form-check-input" type="radio" name="flexRadioDefault" id="2"/>
-                                                <label class="form-check-label" for="flexRadioDefault1">
+                                                <label className="form-check-label" htmlFor="flexRadioDefault1">
                                                     Professor
                                                 </label>
                                             </div>
                                             <div className="form-check">
                                                 <input onChange={e => this.setState({tipoUsuario: "3"})} className="form-check-input" type="radio" name="flexRadioDefault" id="3"/>
-                                                <label class="form-check-label" for="flexRadioDefault1">
+                                                <label className="form-check-label" htmlFor="flexRadioDefault1">
                                                     Sistema
                                                 </label>
                                             </div>
@@ -99,7 +132,7 @@ class Cadastro extends React.Component{
                                         
                                         <div className="form-floating col-6 p-2">
                                         <div>
-                                                <label for="mb-2 floatingInput">Data Nascimento</label>
+                                                <label htmlFor="mb-2 floatingInput">Data Nascimento</label>
                                         </div>
                                             <DatePicker
                                                 selected={this.state.dataNasc} 

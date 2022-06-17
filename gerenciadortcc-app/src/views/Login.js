@@ -1,5 +1,6 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
+import UsuarioService from '../app/service/UsuarioService'
 
 class Login extends React.Component{
     state={
@@ -8,12 +9,35 @@ class Login extends React.Component{
         tipoUsuario:0
 
     }
+    constructor(){
+        super();
+        this.service = new UsuarioService();
+    }
 
     login = () =>{
-        console.log('Email:', this.state.email)
-        console.log('Senha: ', this.state.senha)
-        console.log('TipoUsuario: ', this.state.tipoUsuario)
-        
+        console.log(this.state.tipoUsuario)
+        if (this.state.tipoUsuario === 1){
+            console.log("Usuario")
+
+            this.service.executarLogin({
+                email: this.state.email,
+                senha: this.state.senha
+            })
+            .then( response => {
+                console.log(response.data.nome)
+                console.log("LOGOOOOU")
+            })
+            .catch( erro => {
+                console.log(erro.response)
+            }) 
+
+        }else if (this.state.tipoUsuario === 2){
+            console.log("Professor")
+        }else if (this.state.tipoUsuario === 3){
+            console.log("Sistema")
+        }else{
+            console.log("Informe se é Usuario, Professor ou Sistema")
+        }
     }
 
     render(){
@@ -34,7 +58,7 @@ class Login extends React.Component{
                                         placeholder="name@example.com"
                                         onChange={e => this.setState({email: e.target.value})}
                                         />
-                                    <label for="floatingInput">Email</label>
+                                    <label htmlFor="floatingInput">Email</label>
                                 </div>
                                 <div className="form-floating mb-2 pt-2">
                                     <input value={this.state.senha} 
@@ -44,26 +68,26 @@ class Login extends React.Component{
                                         placeholder="Password"
                                         onChange={e => this.setState({senha: e.target.value})}
                                         />
-                                    <label for="floatingPassword">Senha</label>
+                                    <label htmlFor="floatingPassword">Senha</label>
                                 </div>
                                 <div className="row justify-content-md-center">
                                     <div className="row">
                                         <div className="col-8 mb-2 pt-2">
                                             <div className="form-check">
-                                                <input onChange={e => this.setState({tipoUsuario: "1"})} className="form-check-input" type="radio" name="flexRadioDefault" id="1"/>
-                                                <label class="form-check-label" for="flexRadioDefault1">
+                                                <input onChange={e => this.setState({tipoUsuario: 1})} className="form-check-input" type="radio" name="flexRadioDefault" id="1"/>
+                                                <label className="form-check-label" htmlFor="flexRadioDefault1">
                                                     Aluno
                                                 </label>
                                             </div>
                                             <div className="form-check">
-                                                <input onChange={e => this.setState({tipoUsuario: "2"})} className="form-check-input" type="radio" name="flexRadioDefault" id="2"/>
-                                                <label class="form-check-label" for="flexRadioDefault1">
+                                                <input onChange={e => this.setState({tipoUsuario: 2})} className="form-check-input" type="radio" name="flexRadioDefault" id="2"/>
+                                                <label className="form-check-label" htmlFor="flexRadioDefault1">
                                                     Professor
                                                 </label>
                                             </div>
                                             <div className="form-check">
-                                                <input onChange={e => this.setState({tipoUsuario: "3"})} className="form-check-input" type="radio" name="flexRadioDefault" id="3"/>
-                                                <label class="form-check-label" for="flexRadioDefault1">
+                                                <input onChange={e => this.setState({tipoUsuario: 3})} className="form-check-input" type="radio" name="flexRadioDefault" id="3"/>
+                                                <label className="form-check-label" htmlFor="flexRadioDefault1">
                                                     Sistema
                                                 </label>
                                             </div>
