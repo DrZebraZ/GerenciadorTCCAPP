@@ -1,5 +1,6 @@
 package com.uri.gerenciadortcc.gerenciadortccApi.controller;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
 
@@ -17,7 +18,9 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import com.uri.gerenciadortcc.gerenciadortccApi.controller.objects.addUsuarioObject;
 import com.uri.gerenciadortcc.gerenciadortccApi.controller.objects.loginObject;
 import com.uri.gerenciadortcc.gerenciadortccApi.exception.ErroAutenticacao;
+import com.uri.gerenciadortcc.gerenciadortccApi.model.entity.Curso;
 import com.uri.gerenciadortcc.gerenciadortccApi.model.entity.Usuario;
+import com.uri.gerenciadortcc.gerenciadortccApi.service.CursoService;
 import com.uri.gerenciadortcc.gerenciadortccApi.service.UsuarioService;
 
 
@@ -28,15 +31,18 @@ public class UsuarioController {
 
 	@Autowired
 	private UsuarioService usuarioService;
+	
+	@Autowired
+	private CursoService cursoservice;
 		
 	@PostMapping("/login")
-	public ResponseEntity executaLogin(@RequestBody loginObject login){
-		System.out.println("executaLogin");
+	public Optional<Usuario> executaLogin(@RequestBody addUsuarioObject usuario){
 		try {
-			Optional<Usuario> user = usuarioService.Login(login.getEmail(), login.getSenha());
-			return ResponseEntity.ok(user);
+			Optional<Usuario> user = usuarioService.Login(usuario.getEmail(),usuario.getSenha());
+			return user;
 		}catch(ErroAutenticacao e) {
-			return ResponseEntity.badRequest().body(e.getMessage());		}
+			throw new RuntimeException("erro ao logar", e);
+		}
 	}
 	
 	@PostMapping("/add")
@@ -44,5 +50,10 @@ public class UsuarioController {
 		System.out.println("addUsuario");
 		usuarioService.salvarUsuario(usuario);
 		return "Usuario Adicionado com Sucesso";
+	}
+	
+	@GetMapping("/getCursos")
+	public ArrayList<Curso> getall(){
+		return cursoservice.prucuraCursos();
 	}
 }

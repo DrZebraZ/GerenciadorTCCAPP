@@ -14,5 +14,9 @@ class UsuarioService extends ApiService{
     cadastrarUsuario(credenciais){
         return this.post('/add',credenciais)
     }
+
+    getListaCursos(){
+        return this.get('/getCursos')
+    }
 }
 export default UsuarioService

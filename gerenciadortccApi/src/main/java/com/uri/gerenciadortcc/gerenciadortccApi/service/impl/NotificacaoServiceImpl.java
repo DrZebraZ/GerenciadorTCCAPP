@@ -15,7 +15,6 @@ import com.uri.gerenciadortcc.gerenciadortccApi.service.NotificacaoService;
 public class NotificacaoServiceImpl implements NotificacaoService{
 	
 	private NotificacaoRepository repository;
-	private UsuarioRepository usuarioRepo;
 	
 	public NotificacaoServiceImpl(NotificacaoRepository repository) {
 		super();

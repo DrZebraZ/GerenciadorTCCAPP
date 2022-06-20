@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { Navigate, NavLink } from 'react-router-dom';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import TextField from '@mui/material/TextField';
@@ -15,16 +15,20 @@ class Cadastro extends React.Component{
         nomeCompleto:'',
         tipoUsuario:0,
         curso:0,
-        listaCursos:[{label:'Selecione...',id:0},{label: 'Ciencias da Computacao',id:1}],
+        listaCursos:[],
+        cadastrado:false,
+        novalista:'',
     }
     
     constructor(){
         super();
         this.service = new UsuarioService();
+        this.pegaListaCursos();
     }
 
     cadastrar = () =>{
         console.log(this.state.dataNasc)
+        console.log("IDCurso", this.state.curso)
         this.service.cadastrarUsuario({
             email: this.state.email,
             nome: this.state.nomeCompleto,
@@ -38,6 +42,7 @@ class Cadastro extends React.Component{
             console.log(this.state.email)
             console.log(response.data)
             console.log("CADASTROU")
+            this.setState({cadastrado:true})
         })
         .catch( erro => {
             console.log(this.state.dataNasc)
@@ -46,8 +51,26 @@ class Cadastro extends React.Component{
             console.log(erro.response)
         }) 
     }
+
+
+
+    pegaListaCursos = async () =>{
+        const response = await this.service.getListaCursos()
+        console.log(response.data)
+        const lista = []
+        response.data.map(curso => {
+            lista.push({
+                label:curso.nome,
+                id:curso.idcurso
+            })
+        })
+        this.setState({listaCursos:lista})
+    }
     
     render(){
+        if (this.state.cadastrado){
+            return <Navigate to="/login"/>;
+        }
         return(
             <>
                 <div className="container" style={{marginTop:"5%", marginBottom:300}}>
@@ -135,8 +158,9 @@ class Cadastro extends React.Component{
                                                 <label htmlFor="mb-2 floatingInput">Data Nascimento</label>
                                         </div>
                                             <DatePicker
+                                                dateFormat="dd/MM/yyyy"
                                                 selected={this.state.dataNasc} 
-                                                onChange={(date:Date) => this.setState({dataNasc:date})} 
+                                                onChange={(date) => this.setState({dataNasc:date})}
                                                 type="nome"
                                                 className="form-control"
                                                 placeholder="Data Nascimento"

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Navigate} from 'react-router-dom';
 import { NavLink } from 'react-router-dom'
 import UsuarioService from '../app/service/UsuarioService'
 
@@ -6,7 +7,8 @@ class Login extends React.Component{
     state={
         email:'',
         senha:'',
-        tipoUsuario:0
+        tipoUsuario:0,
+        isLoged:false
 
     }
     constructor(){
@@ -14,21 +16,24 @@ class Login extends React.Component{
         this.service = new UsuarioService();
     }
 
-    login = () =>{
+    login = async () =>{
         console.log(this.state.tipoUsuario)
+        console.log(this.state.email)
+        console.log(this.state.senha)
         if (this.state.tipoUsuario === 1){
             console.log("Usuario")
-
             this.service.executarLogin({
                 email: this.state.email,
                 senha: this.state.senha
             })
             .then( response => {
-                console.log(response.data.nome)
-                console.log("LOGOOOOU")
+            localStorage.setItem('_usuario_logado', JSON.stringify(response.data))
+            console.log(localStorage.getItem('_usuario_logado'))
+            this.setState({isLoged:true})
             })
             .catch( erro => {
                 console.log(erro.response)
+                console.log("não logou")
             }) 
 
         }else if (this.state.tipoUsuario === 2){
@@ -41,8 +46,11 @@ class Login extends React.Component{
     }
 
     render(){
+        if (this.state.isLoged === true){
+            return <Navigate to="/home"/>
+        }
         return(
-            <>
+            <>  
                 <div className="container" style={{marginTop:200, marginBottom:300}}>
                     <div className="row justify-content-center">
                         <div className="col-8">

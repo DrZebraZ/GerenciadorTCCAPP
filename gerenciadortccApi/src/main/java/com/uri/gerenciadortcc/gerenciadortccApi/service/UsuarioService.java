@@ -5,18 +5,19 @@ import java.util.Optional;
 import com.uri.gerenciadortcc.gerenciadortccApi.controller.objects.addUsuarioObject;
 import com.uri.gerenciadortcc.gerenciadortccApi.model.entity.Usuario;
 
+
 public interface UsuarioService {
 	
-	Optional<Usuario> salvarUsuario(addUsuarioObject usuario);
+	public Optional<Usuario> salvarUsuario(addUsuarioObject usuario);
 	
 	//retorna true caso email exista
-	boolean validarEmail(String email);
+	public boolean validarEmail(String email);
 
-	Optional<Usuario> validarCredenciaisADDUsuario(addUsuarioObject usuario);
+	public Optional<Usuario> validarCredenciaisADDUsuario(addUsuarioObject usuario);
 
-	int pegaIdUsuario(Usuario usuario);
+	public int pegaIdUsuario(Usuario usuario);
 
-	Optional<Usuario> Login(String email, String senha);
+	public Optional<Usuario> Login(String email, String senha);
 	
 	
 }

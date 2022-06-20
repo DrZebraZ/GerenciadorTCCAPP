@@ -5,7 +5,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.error.ErrorAttributeOptions;
 import org.springframework.stereotype.Service;
 
 import com.uri.gerenciadortcc.gerenciadortccApi.controller.objects.addUsuarioObject;
@@ -20,13 +19,14 @@ public class UsuarioServiceImpl implements UsuarioService {
 	String formatoData = ("[0-9]+" + "-" + "[0-9]+" +"-" +"[0-9]+");
 	
 	private UsuarioRepository repository;
-	@Autowired
-	private NotificacaoServiceImpl notfyimpl;
 	
 	public UsuarioServiceImpl(UsuarioRepository repository) {
 		super();
 		this.repository = repository;
 	}
+	
+	@Autowired
+	private NotificacaoServiceImpl notfyimpl;
 	
 	private LocalDate transformaData(String datanasc){
 		//Tue May 31 2022 00:00:00 GMT-0300
@@ -52,15 +52,20 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 	@Override
 	public Optional<Usuario> Login(String email, String senha) {
+		System.out.println("Login usuario Service");
 		Optional<Usuario> user = repository.findByEmail(email);
-		if (user.get().getEmail().equals(null)) {
+		if (user.get().equals(null)) {
+			System.out.println("user equals null = emails inválido");
 			throw new ErroAutenticacao("Email inválido");
 		} else if(!user.get().getSenha().equals(senha)) {
 			System.out.println(user.get().getSenha() + " ERROOOO " + senha);
+			System.out.println("senha nao bate = senha inválida");
 			throw new ErroAutenticacao("Senha inválida");
 		}else {
+		System.out.println("retornou usuario");
 		return user;
 		}
+		
 	}
 
 	@Override
