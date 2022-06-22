@@ -1,47 +1,97 @@
 import NavbarItem from "./navbaritem"
-import React from 'react'
+import React, {useState}from 'react'
 import Deslogar from './deslogar'
-class NavBar extends React.Component{
-    state={
-        nomePagina:window.location.pathname,
-    }
-    alteraEstilo = (nome) =>{
-        if (this.state.nomePagina === nome){
+import {useNavigate, } from 'react-router-dom'
+import { textAlign } from "@mui/system";
+import { Navbar, Container, NavbarBrand, Nav, NavDropdown, Form , FormControl, Button } from "react-bootstrap";
+function NavBar(){
+    let navigate = useNavigate();
+    const[nomePagina, setNomePagina] = useState(window.location.pathname);
+
+    function alteraEstilo(props){
+        if (nomePagina === props.nome){
             return{
                 backgroundColor:"aquamarine",
                 color:"Black",
                 border:"0.5px solid black",
-                borderRadius:"10px"
+                borderRadius:"10px",
+                width:70,
+                fontSize:20,
+                fontWeight:900,
             }
         }
     }
-
-    render(){
+    
     return(
-    <nav className="navbar navbar-expand-lg navbar-light bg-light" style={{position:"fixed", width:"100%"}}>
-        <div className="container-fluid ">
-            <div className="col-2"></div>
-            <a className="navbar-brand" href="/home">GTCC</a>
+        <>
+
+            <Navbar bg="light" expand="sm">
+                <Container fluid>
+                    <NavbarItem className="navbar-brand" href="/" label="GTCC" style={alteraEstilo({nome:"/"})}/>
+                    <Navbar.Toggle aria-controls="navbarScroll" />
+                    <Navbar.Collapse id="navbarScroll">
+                        <Nav
+                            className="me-auto my-2 my-lg-0"
+                            style={{ maxHeight: '100px' }}
+                            navbarScroll
+                        >
+
+                            <NavbarItem className="nav-link" href="/tcc" label="TCC" style={alteraEstilo({nome:"/tcc"})}/> 
+
+            
+                        </Nav>
+                        <div className="align-end">
+                            <ul className="navbar-nav me-auto">
+
+                                <NavbarItem className="nav-link" href="/perfil" label="Perfil" style={alteraEstilo({nome:"/perfil"})}  />
+
+                                <li className="button">
+                                    <a className="nav-link" href="/login" onClick={() => {Deslogar()}} >Deslogar</a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </Navbar.Collapse>
+                </Container>
+            </Navbar>        
+        </>
+    )
+}
+
+export default NavBar
+
+/* DROPDOWN BUTTON
+ <NavDropdown title="DROPDAWN" id="navbarScrollingDropdown">
+    <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
+    <NavDropdown.Item href="#action4">Another action</NavDropdown.Item>
+    <NavDropdown.Divider />
+    <NavDropdown.Item href="#action5">
+        Something else here
+    </NavDropdown.Item>
+</NavDropdown>
+*/
+/*
+<nav className="navbar navbar-expand-sm navbar-light bg-light" style={{position:"fixed", width:"100%"}}>
+    <div className="container-fluid ">
+        <div className="col-2"></div>
+            <NavbarItem className="navbar-brand" href="/" label="GTCC"/>
             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
             </button>
-            <div className="collapse navbar-collapse" id="navbarResponsive">
+            <div className="collapse navbar-collapse" id="navbarResponsive" >
                 <ul className="navbar-nav me-auto">
-                    <NavbarItem className="nav-link" href="/home" label="Home" style={this.alteraEstilo("/home")}/> 
-                    <NavbarItem className="nav-link" href="/tcc" label="TCC" style={this.alteraEstilo("/tcc")}/> 
+                    <NavbarItem className="nav-link" href="/tcc" label="TCC" style={alteraEstilo({nome:"/tcc"})}/> 
                 </ul>
+                <div className="align-end">
+                    <ul className="navbar-nav me-auto">
+                        <NavbarItem className="nav-link" href="/perfil" label="Perfil" style={alteraEstilo({nome:"/perfil"})}  />
+                        <li className="button">
+                            <a className="nav-link" href="/login" onClick={() => {Deslogar()}} >Deslogar</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div className="align-end">
-                <ul className="navbar-nav me-auto">
-                    <NavbarItem className="nav-link" style={this.alteraEstilo("/perfil")} href="/perfil" label="Perfil"/>
-                    <li className="button">
-                        <a className="nav-link" href="/login" onClick={() => {Deslogar()}} >Deslogar</a>
-                    </li>
-                </ul>
-            </div>
-            <div className="col-2"></div>
-        </div>
-    </nav> 
-    )}
-}
-export default NavBar
+        <div className="col-2"></div>
+    </div>
+</nav>
+*/

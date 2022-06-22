@@ -1,47 +1,42 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Navigate } from 'react-router-dom';
 import Janela from '../components/janela'
-class Tcc extends React.Component{
-    state={
-        tituloTcc:"Defesa",
-        descricao:"Coloque a descrição do seu TCC aqui",
-        orientador:"Orientador",
-        dataDefesa:"",
-        orientadores:[{nome:"Orientador...",id:0},{nome:"Luis",id:1}]
-    }
-    render(){
-        if (!(localStorage.getItem("_usuario_logado"))){
-            console.log("DESLOGADO")
-            return <Navigate to="/login"/>
-        }
-        return(
-            <>
-            <Janela>
+function Tcc(){
+    const [tituloTcc, setTituloTcc] = useState("Defesa");
+    const [descricao, setDescricao]= useState("Coloque a descrição do seu TCC aqui");
+    const [orientador,setOrientador] =useState("Orientador");
+    const [dataDefesa, setDataDefesa]=useState("");
+    const [orientadores, setOrientadores]=useState([{nome:"Orientador...",id:0},{nome:"Luis",id:1}]);
+    
+    
+    return(
+        <>
+        <Janela>
+            <div className="row">
                 <div className="row">
-                    <div className="row">
-                        <div class="form-group col-8">
-                            <label for="exampleInputEmail" class="form-label mt-4">Titulo TCC</label>
-                            <input onChange={e => this.setState({tituloTcc:e.target.value})}type="tituloTcc" class="form-control" id="exampleInputText" aria-describedby="emailHelp" placeholder={this.state.tituloTcc}></input>
-                        </div>
-                        <div class="form-group col-4">
-                            <label for="exampleSelect1" class="form-label mt-4">Orientador</label>
-                            <select  class="form-select" id="exampleSelect1">
-                                {this.state.orientadores.map(opt => (<option value={opt.id}>{opt.nome}</option>))}
-                            </select>
-                        </div>
-                        <div class="form-group col-12">
-                            <label for="exampleTextarea" class="form-label mt-4">Descrição TCC</label>
-                            <textarea class="form-control" id="exampleTextarea" placeholder={this.state.descricao} rows="6"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="formFile" class="form-label mt-4">PDF TCC</label>
-                            <input class="form-control" type="file" id="formFile" />
-                        </div>
+                    <div className="form-group col-8">
+                        <label htmlFor="exampleInputEmail" className="form-label mt-4">Titulo TCC</label>
+                        <input onChange={e => this.setState({tituloTcc:e.target.value})}type="tituloTcc" className="form-control" id="exampleInputText" aria-describedby="emailHelp" placeholder={  tituloTcc}></input>
+                    </div>
+                    <div className="form-group col-4">
+                        <label htmlFor="exampleSelect1" className="form-label mt-4">Orientador</label>
+                        <select  className="form-select" id="exampleSelect1">
+                            {  orientadores.map(opt => (<option key={opt.id}>{opt.nome}</option>))}
+                        </select>
+                    </div>
+                    <div className="form-group col-12">
+                        <label htmlFor="exampleTextarea" className="form-label mt-4">Descrição TCC</label>
+                        <textarea className="form-control" id="exampleTextarea" placeholder={  descricao} rows="6"></textarea>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="formFile" className="form-label mt-4">PDF TCC</label>
+                        <input className="form-control" type="file" id="formFile" />
                     </div>
                 </div>
-            </Janela>
-            </>
-        )
-    }
+            </div>
+        </Janela>
+        </>
+    )
 }
+
 export default Tcc

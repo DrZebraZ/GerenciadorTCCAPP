@@ -4,7 +4,7 @@ function Janela(props){
     return(
         <>
             <NavBar/>
-            <div className="container" style={{backgroundColor:"rgb(50,50,50)" ,height:800, paddingTop:56}}>
+            <div className="container" style={{height:800, paddingTop:0}}>
                 
                     {props.children}          
                 

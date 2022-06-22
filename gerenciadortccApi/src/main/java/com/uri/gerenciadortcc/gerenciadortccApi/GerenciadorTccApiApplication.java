@@ -13,7 +13,7 @@ public class GerenciadorTccApiApplication implements WebMvcConfigurer {
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
 		registry.addMapping("/**").allowedOrigins("GET","POST","PUT","DELETE","OPTIONS");
-		registry.addMapping("/**").allowedOrigins("http://localhost:8080").allowedOrigins("http://localhost:3000");
+		registry.addMapping("/**").allowedOrigins("http://localhost:8080").allowedOrigins("http://localhost:3000","http://localhost:3001");
 	}
 	
 	public static void main(String[] args) {
