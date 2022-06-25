@@ -127,7 +127,7 @@ public class NotificacaoServiceImpl implements NotificacaoService{
 			Notificacao notificacaoAtualizada = notificacao.get();
 			notificacaoAtualizada.setConfirmada(notificacaoObject.getConfirmada());
 			notificacaoAtualizada.setDescartada(notificacaoObject.getDescartada());
-			notificacaoAtualizada.setDataConfirmacao(ZonedDateTime.from(LocalDate.now()));
+			notificacaoAtualizada.setDataConfirmacao(LocalDate.now());
 			repository.save(notificacaoAtualizada);
 			if(notificacaoAtualizada.getTipoNotificacao().equals(TipoNotificacao.ORIENTACAO)){
 				tarefaOrientacao(notificacaoAtualizada);

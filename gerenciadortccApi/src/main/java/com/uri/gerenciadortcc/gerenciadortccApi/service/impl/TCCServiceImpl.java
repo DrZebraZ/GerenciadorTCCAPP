@@ -38,12 +38,13 @@ public class TCCServiceImpl implements TCCService {
             tcc.setAluno(aluno.get());
         }
 
-        TCC tccEntity = tccRepository.save(tcc);
 
         Optional<Professor> professor = professorRepository.findById(tccObject.getProfessorId());
         if(professor.isPresent()){
-            notificacaoService.salvarNotificacaoOrientacao(professor.get(), tccEntity);
+            tcc.setOrientador(professor.get());
         }
+
+        tccRepository.save(tcc);
 
     }
 

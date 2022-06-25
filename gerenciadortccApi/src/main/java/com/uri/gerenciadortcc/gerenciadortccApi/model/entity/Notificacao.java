@@ -60,6 +60,6 @@ public class Notificacao {
 
 	@UpdateTimestamp
 	@Column(name = "DATA_CONFIRMACAO")
-	private ZonedDateTime dataConfirmacao;
+	private LocalDate dataConfirmacao;
 }
 

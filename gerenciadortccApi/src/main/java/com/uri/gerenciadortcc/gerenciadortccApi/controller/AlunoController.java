@@ -2,6 +2,7 @@ package com.uri.gerenciadortcc.gerenciadortccApi.controller;
 
 import com.uri.gerenciadortcc.gerenciadortccApi.controller.objects.UsuarioObject;
 import com.uri.gerenciadortcc.gerenciadortccApi.controller.objects.loginObject;
+import com.uri.gerenciadortcc.gerenciadortccApi.dto.AlunoLoginDTO;
 import com.uri.gerenciadortcc.gerenciadortccApi.model.entity.Aluno;
 import com.uri.gerenciadortcc.gerenciadortccApi.service.AlunoService;
 import com.uri.gerenciadortcc.gerenciadortccApi.service.DocStorageService;
@@ -24,10 +25,9 @@ public class AlunoController {
     @Autowired
     private DocStorageService docStorageService;
 
-    @GetMapping("/login")
-    public Optional<Aluno> executaLogin(@RequestBody loginObject login){
-        Optional<Aluno> aluno = alunoService.Login(login.getEmail(), login.getSenha());
-        return aluno;
+    @PostMapping("/login")
+    public AlunoLoginDTO executaLogin(@RequestBody loginObject login){
+        return alunoService.Login(login.getEmail(), login.getSenha());
     }
 
     @PostMapping("/add")

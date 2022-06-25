@@ -25,7 +25,7 @@ public class Usuario {
 	private String cpf;
 	
 	@Column(name = "DATA_NASC")
-	private String datanasc;
+	private LocalDate datanasc;
 	
 	@Column(name = "EMAIL")
 	private String email;

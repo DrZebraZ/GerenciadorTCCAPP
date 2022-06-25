@@ -1,6 +1,8 @@
 package com.uri.gerenciadortcc.gerenciadortccApi.service.impl;
 
 import com.uri.gerenciadortcc.gerenciadortccApi.controller.objects.UsuarioObject;
+import com.uri.gerenciadortcc.gerenciadortccApi.dto.AlunoLoginDTO;
+import com.uri.gerenciadortcc.gerenciadortccApi.dto.TCCAlunoDTO;
 import com.uri.gerenciadortcc.gerenciadortccApi.exception.ErroAutenticacao;
 import com.uri.gerenciadortcc.gerenciadortccApi.model.entity.Aluno;
 import com.uri.gerenciadortcc.gerenciadortccApi.model.entity.Curso;
@@ -55,8 +57,13 @@ public class AlunoServiceImpl implements AlunoService {
     }
 
     @Override
-    public Optional<Aluno> Login(String email, String senha) {
-        return repository.findByEmailAndSenha(email, senha);
+    public AlunoLoginDTO Login(String email, String senha) {
+
+        Optional<Aluno> aluno = repository.findByEmailAndSenha(email, senha);
+        if(aluno.isPresent()){
+           return parserAlunoLoginDTO(aluno.get());
+        }
+        throw new RuntimeException();
     }
 
     @Override
@@ -83,5 +90,25 @@ public class AlunoServiceImpl implements AlunoService {
             throw new ErroAutenticacao("Email em uso");
         }
         return true;
+    }
+
+    private AlunoLoginDTO parserAlunoLoginDTO(Aluno aluno) {
+        AlunoLoginDTO alunoLoginDTO = new AlunoLoginDTO();
+        alunoLoginDTO.setId(aluno.getId());
+        alunoLoginDTO.setCpf(aluno.getCpf());
+        alunoLoginDTO.setDatanasc(aluno.getDatanasc());
+        alunoLoginDTO.setNome(aluno.getNome());
+        alunoLoginDTO.setEmail(aluno.getEmail());
+        if(aluno.getTcc() != null){
+            TCCAlunoDTO tccAlunoDTO = new TCCAlunoDTO();
+            tccAlunoDTO.setIdTCC(aluno.getTcc().getIdTCC());
+            tccAlunoDTO.setDescricao(aluno.getTcc().getDescricao());
+            if(aluno.getTcc().getOrientador() != null){
+                tccAlunoDTO.setIdProfessor(aluno.getTcc().getOrientador().getId());
+                tccAlunoDTO.setNomeProfessor(aluno.getTcc().getOrientador().getNome());
+            }
+            alunoLoginDTO.setTccAlunoDTO(tccAlunoDTO);
+        }
+        return alunoLoginDTO;
     }
 }

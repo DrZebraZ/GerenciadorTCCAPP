@@ -26,7 +26,7 @@ public class UsuarioObject {
     @Pattern(regexp = CPF_REGEX, message = "Informe o CPF corretamente")
     private String cpf;
 
-    private String datanasc;
+    private LocalDate datanasc;
 
     @Pattern(regexp = EMAIL_REGEX, message = "Informe um email valido")
     private String email;

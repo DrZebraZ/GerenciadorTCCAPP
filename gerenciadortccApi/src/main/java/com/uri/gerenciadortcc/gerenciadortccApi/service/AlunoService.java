@@ -1,6 +1,7 @@
 package com.uri.gerenciadortcc.gerenciadortccApi.service;
 
 import com.uri.gerenciadortcc.gerenciadortccApi.controller.objects.UsuarioObject;
+import com.uri.gerenciadortcc.gerenciadortccApi.dto.AlunoLoginDTO;
 import com.uri.gerenciadortcc.gerenciadortccApi.model.entity.Aluno;
 
 import java.util.Optional;
@@ -16,5 +17,5 @@ public interface AlunoService {
 
     Long pegaIdAluno(Aluno aluno);
 
-    Optional<Aluno> Login(String email, String senha);
+    AlunoLoginDTO Login(String email, String senha);
 }
