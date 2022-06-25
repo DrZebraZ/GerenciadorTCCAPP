@@ -2,49 +2,38 @@ package com.uri.gerenciadortcc.gerenciadortccApi.model.entity;
 
 import java.time.LocalDate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import javax.persistence.*;
 
-@Entity
-@Table (name = "usuario", schema="mydb")
-@Builder
+import com.uri.gerenciadortcc.gerenciadortccApi.model.enums.TipoUsuario;
+import lombok.Data;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+
+@MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class Usuario {
-	
-	@Id
-	@Column(name = "idusuario")
-	@GeneratedValue( strategy = GenerationType.IDENTITY )
-	private int idusuario;
-	
-	@Column(name = "Curso_idcurso")
-	private int Curso_idcurso;
-	
-	@Column(name = "nome")
+
+	@Column(name = "TIPO_USUARIO")
+	@Enumerated(EnumType.STRING)
+	private TipoUsuario tipoUsuario;
+
+	@Column(name = "NOME")
 	private String nome;
 	
-	@Column(name = "cpf")
+	@Column(name = "CPF")
 	private String cpf;
 	
-	@Column(name = "datanasc")
-	private LocalDate datanasc;
+	@Column(name = "DATA_NASC")
+	private String datanasc;
 	
-	@Column(name = "email")
+	@Column(name = "EMAIL")
 	private String email;
 	
-	@Column(name = "senha")
+	@Column(name = "SENHA")
 	private String senha;
 	
-	@Column(name = "verificado")
-	private int verificado;
+	@Column(name = "VERIFICADO")
+	private Boolean verificado;
 	
 }

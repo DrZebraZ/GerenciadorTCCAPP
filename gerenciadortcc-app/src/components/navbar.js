@@ -1,61 +1,56 @@
 import NavbarItem from "./navbaritem"
-import React, {useState}from 'react'
+import React, { useEffect, useState } from 'react'
 import Deslogar from './deslogar'
-import {useNavigate, } from 'react-router-dom'
+import { useNavigate, } from 'react-router-dom'
 import { textAlign } from "@mui/system";
-import { Navbar, Container, NavbarBrand, Nav, NavDropdown, Form , FormControl, Button } from "react-bootstrap";
-function NavBar(){
-    let navigate = useNavigate();
-    const[nomePagina, setNomePagina] = useState(window.location.pathname);
+import { Navbar, Container, NavbarBrand, Nav, NavDropdown, Form, FormControl, Button } from "react-bootstrap";
+function NavBar() {
+  let navigate = useNavigate();
+  const [nomePagina, setNomePagina] = useState(window.location.pathname);
 
-    function alteraEstilo(props){
-        if (nomePagina === props.nome){
-            return{
-                backgroundColor:"aquamarine",
-                color:"Black",
-                border:"0.5px solid black",
-                borderRadius:"10px",
-                width:70,
-                fontSize:20,
-                fontWeight:900,
-            }
-        }
+  function alteraEstilo(props) {
+    if (props.nome == nomePagina) {
+      return {
+        backgroundColor: "white",
+        color: "Black",
+        border: "0.5px solid black",
+        borderRadius: "10px",
+        width: 80,
+        padding: "12px",
+        fontSize: 16,
+        fontWeight: 900,
+      }
     }
-    
-    return(
-        <>
+  }
 
-            <Navbar bg="light" expand="sm">
-                <Container fluid>
-                    <NavbarItem className="navbar-brand" href="/" label="GTCC" style={alteraEstilo({nome:"/"})}/>
-                    <Navbar.Toggle aria-controls="navbarScroll" />
-                    <Navbar.Collapse id="navbarScroll">
-                        <Nav
-                            className="me-auto my-2 my-lg-0"
-                            style={{ maxHeight: '100px' }}
-                            navbarScroll
-                        >
+  return (
+    <>
 
-                            <NavbarItem className="nav-link" href="/tcc" label="TCC" style={alteraEstilo({nome:"/tcc"})}/> 
-
-            
-                        </Nav>
-                        <div className="align-end">
-                            <ul className="navbar-nav me-auto">
-
-                                <NavbarItem className="nav-link" href="/perfil" label="Perfil" style={alteraEstilo({nome:"/perfil"})}  />
-
-                                <li className="button">
-                                    <a className="nav-link" href="/login" onClick={() => {Deslogar()}} >Deslogar</a>
-                                </li>
-
-                            </ul>
-                        </div>
-                    </Navbar.Collapse>
-                </Container>
-            </Navbar>        
-        </>
-    )
+      <Navbar bg="primary" expand="sm">
+        <Container fluid>
+          <NavbarItem className="navbar-brand" href="/home" label="GTCC" style={alteraEstilo({ nome: "/home" })} />
+          <Navbar.Toggle aria-controls="navbarScroll" />
+          <Navbar.Collapse id="navbarScroll">
+            <Nav
+              className="me-auto my-2 my-lg-0"
+              style={{ maxHeight: '100px' }}
+              navbarScroll
+            >
+              <NavbarItem className="nav-link" href="/tcc" label="TCC" style={alteraEstilo({ nome: "/tcc" })} />
+            </Nav>
+            <div className="align-end">
+              <ul className="navbar-nav me-auto">
+                <NavbarItem className="nav-link" href="/perfil" label="Perfil" style={alteraEstilo({ nome: "/perfil" })} />
+                <li className="button">
+                  <a className="nav-link" href="/login" onClick={() => { Deslogar() }} >Deslogar</a>
+                </li>
+              </ul>
+            </div>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+    </>
+  )
 }
 
 export default NavBar

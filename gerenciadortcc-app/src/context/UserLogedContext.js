@@ -30,12 +30,16 @@ export const UserLogedContextProvider = ({ children }) => {
   }
 
   async function login(tipoUsuario, email, senha) {
+    console.log("Tentando Login")
+    console.log(email)
+    console.log(senha)
     if (tipoUsuario === 1) {
       const response = await service.executarLogin({
         email: email,
         senha: senha
       })
       const data = await response.data
+      console.log("Logou", data)
       localStorage.setItem('_usuario_logado', JSON.stringify(response.data))
       setIsLogado(true)
       navigate("/home")

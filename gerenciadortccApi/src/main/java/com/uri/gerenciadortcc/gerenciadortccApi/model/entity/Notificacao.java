@@ -1,15 +1,9 @@
 package com.uri.gerenciadortcc.gerenciadortccApi.model.entity;
 
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.uri.gerenciadortcc.gerenciadortccApi.model.enums.TipoNotificacao;
 
@@ -17,9 +11,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
-@Table (name = "notificacao", schema="mydb")
+@Table (name = "NOTIFICACAO", schema="mydb")
 @Builder
 @Data
 @AllArgsConstructor
@@ -27,33 +22,44 @@ import lombok.NoArgsConstructor;
 public class Notificacao {
 	
 	@Id
-	@Column(name = "idnotificacao")
-	@GeneratedValue( strategy = GenerationType.IDENTITY )
-	private long idnotificacao;
+	@Column(name = "ID_NOTIFICACAO")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long idNotificacao;
 	
-	@Column(name="data_notificacao")
-	private LocalDate data_notificacao;
+	@Column(name="DATA_NOTIFICACAO")
+	private LocalDate dataNotificacao;
 	
-	@Column(name="tipo_notificacao")
+	@Column(name="TIPO_NOTIFICACAO")
 	@Enumerated(value = EnumType.STRING)
-	private TipoNotificacao tipo_notificacao;
-	
-	@Column(name="usuario")
-	private int usuario;
-	
-	@Column(name="professor")
-	private int professor;
+	private TipoNotificacao tipoNotificacao;
+
+	@ManyToOne
+	@JoinColumn(name = "PROFESSOR_ID")
+	private Professor professor;
+
+	@ManyToOne
+	@JoinColumn(name = "ALUNO_ID")
+	private Aluno aluno;
+
+	@OneToOne(mappedBy = "notificacao")
+	private TCC tcc;
+
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ORIENTACAO_ID")
+	private Orientacao orientacao;
+
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "DATA_ORIENTACAO_ID")
+	private DataOrientacao dataOrientacao;
 	
 	@Column(name="confirmada")
-	private int confirmada;
+	private Boolean confirmada;
 	
 	@Column(name="descartada")
-	private int descartada;
-	
-	@Column(name="id_confirmador")
-	private int id_confirmador;
-	
-	@Column(name="data_confirmacao")
-	private LocalDate data_confirmacao;
+	private Boolean descartada;
+
+	@UpdateTimestamp
+	@Column(name = "DATA_CONFIRMACAO")
+	private ZonedDateTime dataConfirmacao;
 }
 

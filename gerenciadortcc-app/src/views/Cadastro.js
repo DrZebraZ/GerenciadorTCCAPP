@@ -20,8 +20,19 @@ function Cadastro() {
   const [service, setService] = useState(new UsuarioService());
 
   function cadastrar() {
+    console.log(email)
+    console.log(nomeCompleto)
+    console.log(cpf)
+    console.log(dataNasc)
+    console.log(senha)
+    console.log(curso)
     service.cadastrarUsuario({
-      email: email, nome: nomeCompleto, cpf: cpf, datanasc: dataNasc, senha: senha, curso_idcurso: curso,
+      email: email,
+      nome: nomeCompleto, 
+      cpf: cpf, 
+      datanasc: dataNasc, 
+      senha: senha, 
+      cursoId: curso,
     })
       .then(response => {
         console.log("CADASTROU")
@@ -36,10 +47,11 @@ function Cadastro() {
   useEffect(() => {
     console.log("pega lista cursos")
     async function fetchData() {
-      const response = await fetch('http://localhost:8080/api/usuario/getCursos')
+      const response = await fetch('http://localhost:8080/curso/getCursos')
       const data = await response.json()
-      const lista = data.map(objeto => ({ label: objeto.nome, key: objeto.idcurso }))
+      const lista = data.map(objeto => ({ label: objeto.nome, key: objeto.idCurso }))
       setListaCursos(lista)
+      console.log(lista)
     }
     fetchData();
   }, [])
@@ -54,15 +66,15 @@ function Cadastro() {
   }
   return (
     <>
-      <div className="container" style={{ marginTop: "5%", marginBottom: 300 }}>
+      <div className="container" style={{ marginTop: "10%", marginBottom: 300 }}>
         <div className="row justify-content-center">
           <div className="col-10">
-            <div className="p-4 border">
+            <div className="p-4" style={{ backgroundColor: "#4C9BE8", border: "2px solid black", borderRadius: "30px", color: "black" }}>
               <div className="col-6">
                 <h1>Cadastro</h1>
               </div>
               <div className="form-floating mb-1 pt-1">
-                <input value={nomeCompleto}
+                <input style={{ borderRadius: "10px" }} value={nomeCompleto}
                   type="nomeCompleto"
                   className="form-control"
                   id="floatingNome"
@@ -72,7 +84,7 @@ function Cadastro() {
                 <label htmlFor="floatingInput">Nome Completo</label>
               </div>
               <div className="form-floating mb-1 pt-1">
-                <input value={cpf}
+                <input style={{ borderRadius: "10px" }} value={cpf}
                   type="cpf"
                   className="form-control"
                   id="floatingCPF"
@@ -82,7 +94,7 @@ function Cadastro() {
                 <label htmlFor="floatingInput">CPF (apenas numeros)</label>
               </div>
               <div className="form-floating mb-1 pt-1">
-                <input value={email}
+                <input style={{ borderRadius: "10px" }} value={email}
                   type="email"
                   className="form-control"
                   id="floatingEmail"
@@ -92,7 +104,7 @@ function Cadastro() {
                 <label htmlFor="floatingInput">Email</label>
               </div>
               <div className="form-floating mb-1 pt-1">
-                <input value={senha}
+                <input style={{ borderRadius: "10px" }} value={senha}
                   className="form-control"
                   id="floatingPassword"
                   placeholder="Password"
@@ -103,9 +115,9 @@ function Cadastro() {
               <div className="form-floating mb-1 pt-1">
                 <Autocomplete
                   disablePortal
-                  id="combo-box-demo"
+                  id="use-autocomplete-demo"
                   options={listaCursos}
-                  renderInput={(params) => <TextField {...params} className="form-control" label="Curso" />}
+                  renderInput={(params) => <TextField {...params} style={{ borderRadius: 10, backgroundColor: "#FFFFFF" }} label="Curso" />}
                   onChange={(e, newCurso) => setCurso(newCurso.key)}
                 />
               </div>
@@ -118,37 +130,31 @@ function Cadastro() {
                         Aluno
                       </label>
                     </div>
-                    <div className="form-check">
+                    <div className="form-check" >
                       <input onChange={e => setTipoUsuario(2)} className="form-check-input" type="radio" name="flexRadioDefault" id="2" />
                       <label className="form-check-label" htmlFor="flexRadioDefault1">
                         Professor
                       </label>
                     </div>
-                    <div className="form-check">
-                      <input onChange={e => setTipoUsuario(3)} className="form-check-input" type="radio" name="flexRadioDefault" id="3" />
-                      <label className="form-check-label" htmlFor="flexRadioDefault1">
-                        Sistema
-                      </label>
-                    </div>
                   </div>
 
-                  <div className="form-floating col-6 p-2">
+                  <div className="form-floating col-6 p-2 mb-4">
                     <div>
-                      <label htmlFor="mb-2 floatingInput">Data Nascimento</label>
+                      <label style={{ color: "black" }} htmlFor="mb-2 floatingInput">Data Nascimento</label>
                     </div>
                     <DatePicker
                       dateFormat="ddMMyyyy"
                       selected={dataNasc}
                       onChange={(date) => (setDataNasc(date))}
                       type="nome"
-                      className="form-control"
+                      className="form-control rounded-pill"
                       placeholder="Data Nascimento"
 
                     />
                   </div>
                 </div>
                 <div className="" style={{ textAlign: "center" }}>
-                  <button onClick={cadastrar} type="button" className="btn btn-light mb-2 pt-2" style={{ width: "50%" }}>Cadastrar</button>
+                  <button onClick={cadastrar} type="button" className="btn btn-light mb-2 pt-2" style={{ color: "black", backgroundColor: "white", borderRadius: "10px", width: "50%" }}>Cadastrar</button>
                 </div>
               </div>
             </div>
@@ -156,7 +162,7 @@ function Cadastro() {
         </div>
         <div className="row justify-content-center">
           <div className="" style={{ textAlign: "center" }}>
-            <NavLink to="/login">Ja tem conta? Login.</NavLink>
+            <NavLink to="/login">Ja tem conta? Login</NavLink>
           </div>
         </div>
       </div>

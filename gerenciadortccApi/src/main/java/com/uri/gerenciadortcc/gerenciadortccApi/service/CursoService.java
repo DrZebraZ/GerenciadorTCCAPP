@@ -8,7 +8,7 @@ import com.uri.gerenciadortcc.gerenciadortccApi.model.entity.Curso;
 
 public interface CursoService {
 	
-	ArrayList<Curso> prucuraCursos();
+	ArrayList<Curso> procuraCursos();
 
 	Curso addCurso(Curso curso);
 	

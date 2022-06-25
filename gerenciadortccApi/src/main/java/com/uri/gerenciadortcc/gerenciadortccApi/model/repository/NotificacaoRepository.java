@@ -9,6 +9,4 @@ import com.uri.gerenciadortcc.gerenciadortccApi.model.entity.Notificacao;
 @Repository
 public interface NotificacaoRepository extends JpaRepository<Notificacao, Long>{
 	
-	Optional<Notificacao> findByUsuario(Integer id);
-	
 }

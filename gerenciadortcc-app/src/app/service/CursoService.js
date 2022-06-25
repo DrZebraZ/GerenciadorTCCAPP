@@ -1,14 +1,14 @@
 import ApiService from '../ApiService'
 
-class CursoService extends ApiService{
+class CursoService extends ApiService {
 
-    constructor(){
-        super('/api/curso')
-    }
+  constructor() {
+    super('/curso')
+  }
 
-    getCursos(){
-        return this.get('/getCursos')
-    }
+  getCursos() {
+    return this.get('/getCursos')
+  }
 
 }
 export default CursoService
