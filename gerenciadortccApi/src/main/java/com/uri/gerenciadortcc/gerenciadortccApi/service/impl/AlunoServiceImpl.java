@@ -99,6 +99,8 @@ public class AlunoServiceImpl implements AlunoService {
         alunoLoginDTO.setDatanasc(aluno.getDatanasc());
         alunoLoginDTO.setNome(aluno.getNome());
         alunoLoginDTO.setEmail(aluno.getEmail());
+        alunoLoginDTO.setIdCurso(aluno.getCurso().getIdCurso());
+        alunoLoginDTO.setNomeCurso(aluno.getCurso().getNome());
         if(aluno.getTcc() != null){
             TCCAlunoDTO tccAlunoDTO = new TCCAlunoDTO();
             tccAlunoDTO.setIdTCC(aluno.getTcc().getIdTCC());

@@ -1,6 +1,7 @@
 package com.uri.gerenciadortcc.gerenciadortccApi.service.impl;
 
 import com.uri.gerenciadortcc.gerenciadortccApi.controller.objects.UsuarioObject;
+import com.uri.gerenciadortcc.gerenciadortccApi.dto.ProfessorDTO;
 import com.uri.gerenciadortcc.gerenciadortccApi.exception.ErroAutenticacao;
 import com.uri.gerenciadortcc.gerenciadortccApi.model.entity.Curso;
 import com.uri.gerenciadortcc.gerenciadortccApi.model.entity.Professor;
@@ -12,6 +13,7 @@ import com.uri.gerenciadortcc.gerenciadortccApi.service.ProfessorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -60,8 +62,16 @@ public class ProfessorServiceImpl implements ProfessorService {
     }
 
     @Override
-    public List<String> getProfessorPorCurso(Long cursoId) {
-        return repository.getNameProfessorPorCurso(cursoId);
+    public ArrayList<ProfessorDTO> getProfessorPorCurso(Long cursoId) {
+    	ArrayList<Professor> lista = repository.getProfessorPorIDCurso(cursoId);
+    	ArrayList<ProfessorDTO> listaRetorno = new ArrayList<ProfessorDTO>();
+    	for (int i = 0 ; i<lista.size();i++) {
+    		ProfessorDTO prof = new ProfessorDTO();
+    		prof.setId(lista.get(i).getId());
+    		prof.setNome(lista.get(i).getNome());
+    		listaRetorno.add(prof);
+    	}
+        return listaRetorno;
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.uri.gerenciadortcc.gerenciadortccApi.controller;
 
 import com.uri.gerenciadortcc.gerenciadortccApi.controller.objects.UsuarioObject;
 import com.uri.gerenciadortcc.gerenciadortccApi.controller.objects.loginObject;
+import com.uri.gerenciadortcc.gerenciadortccApi.dto.ProfessorDTO;
 import com.uri.gerenciadortcc.gerenciadortccApi.model.entity.Professor;
 import com.uri.gerenciadortcc.gerenciadortccApi.service.DocStorageService;
 import com.uri.gerenciadortcc.gerenciadortccApi.service.ProfessorService;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,7 +41,7 @@ public class ProfessorController {
     }
 
     @GetMapping("/{cursoId}/getProfessor")
-    public List<String> getNamoProfessorPorCurso(@PathVariable("cursoId") String cursoId){
+    public ArrayList<ProfessorDTO> getNamoProfessorPorCurso(@PathVariable("cursoId") String cursoId){
         return professorService.getProfessorPorCurso(Long.valueOf(cursoId));
     }
 

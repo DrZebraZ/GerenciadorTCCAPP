@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.uri.gerenciadortcc.gerenciadortccApi.controller.objects.cursoObject;
 import com.uri.gerenciadortcc.gerenciadortccApi.model.entity.Curso;
 import com.uri.gerenciadortcc.gerenciadortccApi.service.CursoService;
 
@@ -17,12 +18,7 @@ import com.uri.gerenciadortcc.gerenciadortccApi.service.CursoService;
 public class crossOriginController {
 	@Autowired
 	private CursoService cursoservice;
-	
-	@GetMapping("/curso/getcross")
-	public ArrayList<Curso> getall(){
-		return cursoservice.procuraCursos();
-	}
-	
+
 	
 	
 }

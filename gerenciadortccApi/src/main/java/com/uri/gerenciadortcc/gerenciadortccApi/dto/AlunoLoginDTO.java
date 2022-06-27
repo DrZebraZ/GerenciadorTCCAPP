@@ -18,5 +18,9 @@ public class AlunoLoginDTO {
     private String email;
 
     private TCCAlunoDTO tccAlunoDTO;
+    
+    private Long idCurso;
+    
+    private String nomeCurso;
 
 }

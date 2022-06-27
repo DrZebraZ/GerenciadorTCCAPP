@@ -3,6 +3,8 @@ package com.uri.gerenciadortcc.gerenciadortccApi.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import com.uri.gerenciadortcc.gerenciadortccApi.controller.objects.cursoObject;
+import com.uri.gerenciadortcc.gerenciadortccApi.dto.CursoReturnDTO;
 import com.uri.gerenciadortcc.gerenciadortccApi.model.entity.Curso;
 import com.uri.gerenciadortcc.gerenciadortccApi.service.CursoService;
 
@@ -23,7 +25,7 @@ public class CursoController {
 	}
 
 	@GetMapping("/getCursos")
-	public ArrayList<Curso> getall(){
+	public ArrayList<CursoReturnDTO> getall(){
 		return cursoservice.procuraCursos();
 	}
 }

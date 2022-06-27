@@ -41,6 +41,7 @@ export const UserLogedContextProvider = ({ children }) => {
       const data = await response.data
       console.log("Logou", data)
       localStorage.setItem('_usuario_logado', JSON.stringify(response.data))
+      localStorage.setItem('_tcc', JSON.stringify(response.data.tccAlunoDTO))
       setIsLogado(true)
       navigate("/home")
     } else if (this.state.tipoUsuario === 2) {
