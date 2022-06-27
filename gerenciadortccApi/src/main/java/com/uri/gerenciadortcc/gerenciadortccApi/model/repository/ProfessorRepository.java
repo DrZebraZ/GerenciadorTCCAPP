@@ -1,4 +1,5 @@
 package com.uri.gerenciadortcc.gerenciadortccApi.model.repository;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,9 +18,9 @@ public interface ProfessorRepository extends JpaRepository<Professor, Long>{
 
 	Optional<Professor> findByEmail(String email);
 
-	@Query(value = "SELECT nome FROM PROFESSOR WHERE cursoId = :cursoId", nativeQuery = true)
-	List<String> getNameProfessorPorCurso(Long cursoId);
+	@Query(value = "SELECT * FROM PROFESSOR WHERE curso_id = :cursoId", nativeQuery = true)
+	ArrayList<Professor> getProfessorPorIDCurso(Long cursoId);
 
-	@Query(value = "SELECT * FROM PROFESSOR WHERE cursoId = :cursoId AND coordenador = 1", nativeQuery = true)
+	@Query(value = "SELECT * FROM PROFESSOR WHERE curso_id = :cursoId AND coordenador = 1", nativeQuery = true)
 	Optional<Professor> getCoordenador(Long cursoId);
 }
