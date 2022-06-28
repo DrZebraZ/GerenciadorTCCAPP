@@ -51,8 +51,14 @@ public class ProfessorController {
         return "Coordenador setado com sucesso";
     }
 
+    @PutMapping("/{professorId}/cursos/{cursoId}")
+    public String adicionaCurso(@PathVariable("professorId") String professorId, @PathVariable("cursoId") String cursoId){
+        professorService.adicionaCurso(Long.valueOf(professorId), Long.valueOf(cursoId));
+        return "Curso adicionado ao Professor";
+    }
+
     @GetMapping("/{cursoId}/coordenador")
-    public Optional<Professor> getNamoProfessorCoordenador(@PathVariable("cursoId") String cursoId){
+    public ProfessorDTO getNamoProfessorCoordenador(@PathVariable("cursoId") String cursoId){
         return professorService.getProfessorCoordenador(Long.valueOf(cursoId));
     }
 

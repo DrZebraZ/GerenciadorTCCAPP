@@ -25,6 +25,8 @@ public interface ProfessorService {
 
     void transformaProfessorCoordenador(Long professorId);
 
-    Optional<Professor> getProfessorCoordenador(Long cursoId);
+    ProfessorDTO getProfessorCoordenador(Long cursoId);
+
+    void adicionaCurso(Long professorId, Long cursoId);
 
 }

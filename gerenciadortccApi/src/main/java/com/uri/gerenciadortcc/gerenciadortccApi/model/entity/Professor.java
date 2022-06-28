@@ -32,9 +32,12 @@ public class Professor extends Usuario{
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "orientador")
 	private List<TCC> orientacoes;
 
-	@ManyToOne
-	@JoinColumn(name = "CURSO_ID")
-	private Curso curso;
+	@ManyToMany
+	@JoinTable(
+			name = "CURSO_PROFESSOR",
+			joinColumns = @JoinColumn(name = "PROFESSOR_ID"),
+			inverseJoinColumns = @JoinColumn(name = "CURSO_ID"))
+	private List<Curso> cursos;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "professor")
 	private List<Notificacao> notificacoes;
