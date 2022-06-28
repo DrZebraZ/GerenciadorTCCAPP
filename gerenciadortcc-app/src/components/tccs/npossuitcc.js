@@ -12,7 +12,7 @@ function NPossuiTCC(){
   const [orientadores, setOrientadores] = useState();
   const [idCurso ,setIdCurso] = useState()
   const [service, setService] = useState(new ProfessorService())
-  const [logado, setLogado] = useState(false)
+  const [carregado, setCarregado] = useState(false)
   
   function CadastraTCC(){
     console.log("TITULO: ", tituloTcc)
@@ -36,13 +36,13 @@ function NPossuiTCC(){
       console.log(lista)
       setOrientadores(lista)
       console.log("orientadores", orientadores)  
-      setLogado(true)
+      setCarregado(true)
     }
     procuraCursos()
   }
 
-  if (!logado){
-    console.log("nlogado")
+  if (!carregado){
+    console.log("ncarregado")
     procuraListaProfessores()
     return (
       <h1>carregando...</h1>
@@ -63,6 +63,7 @@ function NPossuiTCC(){
            value={orientador} 
            onChange={(e) => setOrientador(e.target.value)}
           >
+            <option key={0} value={0}>Selecione...</option>
             {orientadores.map(opt => (
               <option key={opt.key} value={opt.key}>
                 {opt.nome}

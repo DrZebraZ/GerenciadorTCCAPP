@@ -9,16 +9,13 @@ function Tcc() {
   const [orientador, setOrientador] = useState("");
   const [nomeOrientador, setNomeOrientador] = useState("")
   const [dataDefesa, setDataDefesa] = useState("");
-  const [orientadores, setOrientadores] = useState([{ nome: "Orientador...", id: 0 }, { nome: "Luis", id: 1 }]);
   const [possuiTCC, setPossuiTCC] = useState(false);
   const [tcc, setTCC] = useState(JSON.parse(localStorage.getItem("_tcc")));
   
   useEffect(() => {
     async function setaTCC(){
       setTCC(JSON.parse(localStorage.getItem("_tcc")))
-      console.log("TCC:" , tcc)
       setDescricao(tcc.descricao)
-      console.log(tcc.descricao)
       setOrientador(tcc.idProfessor)
       setNomeOrientador(tcc.nomeProfessor)
       setPossuiTCC(true)
@@ -34,6 +31,7 @@ function Tcc() {
     </>
   )
   }else{
+    
     return (
       <Janela>
         <div className="row mb-4">
@@ -43,8 +41,12 @@ function Tcc() {
           </div>
           <div className="form-group col-4">
             <label style={{ fontSize: 20, color: "black" }} htmlFor="exampleSelect1" className="form-label mt-2">Orientador</label>
-            <select style={{ borderRadius: 10 }} className="form-select" id="exampleSelect1">
-              {orientadores.map(opt => (<option key={opt.id}>{opt.nome}</option>))}
+            <select style={{ borderRadius: 10 }} 
+              className="form-select" 
+              id="exampleSelect1"
+              value={orientador} 
+            >
+              <option key={0} value={0}>{nomeOrientador}</option>
             </select>
           </div>
           <div className="form-group col-12">
