@@ -10,6 +10,7 @@ import com.uri.gerenciadortcc.gerenciadortccApi.model.repository.CursoRepository
 import com.uri.gerenciadortcc.gerenciadortccApi.model.repository.ProfessorRepository;
 import com.uri.gerenciadortcc.gerenciadortccApi.service.NotificacaoService;
 import com.uri.gerenciadortcc.gerenciadortccApi.service.ProfessorService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class ProfessorServiceImpl implements ProfessorService {
 
     @Autowired
@@ -45,7 +47,9 @@ public class ProfessorServiceImpl implements ProfessorService {
             professor.setTipoUsuario(TipoUsuario.PROFESSOR);
             Optional<Curso> curso = cursoRepository.findById(usuarioObject.getCursoId());
             if(curso.isPresent()){
-                professor.setCurso(curso.get());
+                List<Curso> cursos = new ArrayList<>();
+                cursos.add(curso.get());
+                professor.setCursos(cursos);
             }
             Professor professorEntity = repository.save(professor);
             if(usuarioObject.getFoto() != null){
@@ -64,11 +68,12 @@ public class ProfessorServiceImpl implements ProfessorService {
     @Override
     public ArrayList<ProfessorDTO> getProfessorPorCurso(Long cursoId) {
     	ArrayList<Professor> lista = repository.getProfessorPorIDCurso(cursoId);
+    	log.info("AQUIIIII {}", lista.size());
     	ArrayList<ProfessorDTO> listaRetorno = new ArrayList<ProfessorDTO>();
-    	for (int i = 0 ; i<lista.size();i++) {
+    	for (Professor professor: lista) {
     		ProfessorDTO prof = new ProfessorDTO();
-    		prof.setId(lista.get(i).getId());
-    		prof.setNome(lista.get(i).getNome());
+    		prof.setId(professor.getId());
+    		prof.setNome(professor.getNome());
     		listaRetorno.add(prof);
     	}
         return listaRetorno;
@@ -85,8 +90,32 @@ public class ProfessorServiceImpl implements ProfessorService {
     }
 
     @Override
-    public Optional<Professor> getProfessorCoordenador(Long cursoId) {
-        return repository.getCoordenador(cursoId);
+    public ProfessorDTO getProfessorCoordenador(Long cursoId) {
+        Optional<Professor> professor =  repository.getCoordenador(cursoId);
+        if(professor.isPresent()){
+            ProfessorDTO professorDTO = new ProfessorDTO();
+            professorDTO.setId(professor.get().getId());
+            professorDTO.setNome(professor.get().getNome());
+            return professorDTO;
+        }else {
+            throw new RuntimeException();
+        }
+
+    }
+
+    @Override
+    public void adicionaCurso(Long professorId, Long cursoId) {
+        Optional<Professor> professor = repository.findById(professorId);
+        Optional<Curso> curso = cursoRepository.findById(cursoId);
+        if(professor.isPresent() && curso.isPresent()){
+            List<Curso> cursos = professor.get().getCursos();
+            cursos.add(curso.get());
+            professor.get().setCursos(cursos);
+            repository.save(professor.get());
+        }else {
+            throw new RuntimeException();
+        }
+
     }
 
     @Override

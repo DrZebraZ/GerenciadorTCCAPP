@@ -27,7 +27,7 @@ public class Curso {
 	@Column(name = "AREA_CURSO")
 	private String areacurso;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "curso")
+	@ManyToMany(mappedBy = "cursos")
 	private List<Professor> professores;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "curso")
