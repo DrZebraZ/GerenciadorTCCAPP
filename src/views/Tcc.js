@@ -31,7 +31,6 @@ function Tcc() {
     </>
   )
   }else{
-    
     return (
       <Janela>
         <div className="row mb-4">

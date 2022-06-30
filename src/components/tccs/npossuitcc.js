@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ProfessorService from "../../app/service/ProfessorService";
+import TccService from "../../app/service/TccService";
 import UsuarioService from "../../app/service/UsuarioService";
 import Janela from "../janela";
 
@@ -13,19 +15,33 @@ function NPossuiTCC(){
   const [orientadores, setOrientadores] = useState();
   const [idCurso ,setIdCurso] = useState()
   const [service, setService] = useState(new ProfessorService())
+  const [tccService, setTccService] = useState(new TccService())
   const [carregado, setCarregado] = useState(false)
+  const [usuarioID, setUsuarioID] = useState()
+  const Navigate = useNavigate()
   
-  function CadastraTCC(){
-    console.log("TITULO: ", tituloTcc)
-    console.log("Descricao: ", descricao)
-    console.log("orientador: " , orientador)
-    console.log("documento: ", docFile)
-
+  async function CadastraTCC(){
+    const response = await tccService.adicionarTCC({
+      "titulo":tituloTcc,
+      "descricao":descricao,
+      "professorId":orientador,
+      "alunoId":usuarioID
+    })
+    const data = await response.data
+    localStorage.removeItem('_tcc')
+    localStorage.setItem('_tcc', JSON.stringify(response.data))
+    if (docFile){
+      let formData = new FormData()
+      formData.append("file",docFile)
+      const salvatcc = await tccService.addDocAoTCC({"idTCC":response.data.id},formData)
+    }
+    Navigate("/home")
   }
 
   async function setaIdCurso(){
     const Logado = await JSON.parse(localStorage.getItem("_usuario_logado"))
     setIdCurso(Logado.idCurso)
+    setUsuarioID(Logado.id)
   }
 
   async function procuraListaProfessores(){

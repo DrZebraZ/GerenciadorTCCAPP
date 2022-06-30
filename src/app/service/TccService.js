@@ -15,8 +15,8 @@ class TccService extends ApiService {
     return this.get(`/${props.idTCC}/getTCC`)
   }
 
-  getListaProfessores(credenciais) {
-    return this.get(`/${credenciais.idCurso}/getProfessor`)
+  addDocAoTCC(props, credenciais) {
+    return this.post(`/add/${props.idTCC}/document`,credenciais)
   }
 }
 export default TccService
