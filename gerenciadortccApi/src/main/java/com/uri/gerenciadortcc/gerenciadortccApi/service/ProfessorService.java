@@ -1,6 +1,7 @@
 package com.uri.gerenciadortcc.gerenciadortccApi.service;
 
 import com.uri.gerenciadortcc.gerenciadortccApi.controller.objects.UsuarioObject;
+import com.uri.gerenciadortcc.gerenciadortccApi.dto.ProfessorCompletoDTO;
 import com.uri.gerenciadortcc.gerenciadortccApi.dto.ProfessorDTO;
 import com.uri.gerenciadortcc.gerenciadortccApi.model.entity.Professor;
 
@@ -19,7 +20,7 @@ public interface ProfessorService {
 
     Long pegaIdProfessor(Professor professor);
 
-    Optional<Professor> Login(String email, String senha);
+    ProfessorCompletoDTO Login(String email, String senha);
 
     ArrayList<ProfessorDTO> getProfessorPorCurso(Long cursoId);
 
@@ -29,4 +30,5 @@ public interface ProfessorService {
 
     void adicionaCurso(Long professorId, Long cursoId);
 
+    ProfessorCompletoDTO getProfessor(Long professorId);
 }

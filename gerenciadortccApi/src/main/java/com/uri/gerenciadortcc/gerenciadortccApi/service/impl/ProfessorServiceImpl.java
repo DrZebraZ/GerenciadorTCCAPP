@@ -1,10 +1,14 @@
 package com.uri.gerenciadortcc.gerenciadortccApi.service.impl;
 
 import com.uri.gerenciadortcc.gerenciadortccApi.controller.objects.UsuarioObject;
+import com.uri.gerenciadortcc.gerenciadortccApi.dto.CursoReturnDTO;
+import com.uri.gerenciadortcc.gerenciadortccApi.dto.ProfessorCompletoDTO;
 import com.uri.gerenciadortcc.gerenciadortccApi.dto.ProfessorDTO;
+import com.uri.gerenciadortcc.gerenciadortccApi.dto.TCCProfessorDTO;
 import com.uri.gerenciadortcc.gerenciadortccApi.exception.ErroAutenticacao;
 import com.uri.gerenciadortcc.gerenciadortccApi.model.entity.Curso;
 import com.uri.gerenciadortcc.gerenciadortccApi.model.entity.Professor;
+import com.uri.gerenciadortcc.gerenciadortccApi.model.entity.TCC;
 import com.uri.gerenciadortcc.gerenciadortccApi.model.enums.TipoUsuario;
 import com.uri.gerenciadortcc.gerenciadortccApi.model.repository.CursoRepository;
 import com.uri.gerenciadortcc.gerenciadortccApi.model.repository.ProfessorRepository;
@@ -61,8 +65,13 @@ public class ProfessorServiceImpl implements ProfessorService {
     }
 
     @Override
-    public Optional<Professor> Login(String email, String senha) {
-        return repository.findByEmailAndSenha(email, senha);
+    public ProfessorCompletoDTO Login(String email, String senha) {
+        Optional<Professor> professor = repository.findByEmailAndSenha(email, senha);
+        if(professor.isPresent()){
+            return parseProfessorCompletoDTO(professor.get());
+        }else {
+            throw new RuntimeException();
+        }
     }
 
     @Override
@@ -119,6 +128,16 @@ public class ProfessorServiceImpl implements ProfessorService {
     }
 
     @Override
+    public ProfessorCompletoDTO getProfessor(Long professorId) {
+        Optional<Professor> professor = repository.findById(professorId);
+        if(professor.isPresent()){
+            return parseProfessorCompletoDTO(professor.get());
+        }else {
+            throw new RuntimeException();
+        }
+    }
+
+    @Override
     public boolean validarEmail(String email) {
         boolean existe = repository.existsByEmail(email);
         if (existe){
@@ -142,5 +161,39 @@ public class ProfessorServiceImpl implements ProfessorService {
             throw new ErroAutenticacao("Email em uso");
         }
         return true;
+    }
+
+    private ProfessorCompletoDTO parseProfessorCompletoDTO(Professor professor) {
+        ProfessorCompletoDTO professorCompletoDTO = new ProfessorCompletoDTO();
+        professorCompletoDTO.setId(professor.getId());
+        professorCompletoDTO.setNome(professor.getNome());
+        professorCompletoDTO.setCpf(professor.getCpf());
+        professorCompletoDTO.setDatanasc(professor.getDatanasc());
+        professorCompletoDTO.setEmail(professor.getEmail());
+        professorCompletoDTO.setCoordenador(professor.getCoordenador());
+        if(professor.getOrientacoes() != null && !professor.getOrientacoes().isEmpty()){
+            List<TCCProfessorDTO> tccProfessorDTOS = new ArrayList<>();
+            for(TCC tcc : professor.getOrientacoes()){
+                TCCProfessorDTO tccProfessorDTO = new TCCProfessorDTO();
+                tccProfessorDTO.setIdTCC(tcc.getIdTCC());
+                tccProfessorDTO.setDescricao(tcc.getDescricao());
+                tccProfessorDTO.setIdAluno(tcc.getAluno().getId());
+                tccProfessorDTO.setNomeAluno(tcc.getAluno().getNome());
+                tccProfessorDTOS.add(tccProfessorDTO);
+            }
+            professorCompletoDTO.setTccs(tccProfessorDTOS);
+        }
+        if(professor.getCursos() != null && !professor.getCursos().isEmpty()){
+            List<CursoReturnDTO> cursoReturnDTOS = new ArrayList<>();
+            for(Curso curso : professor.getCursos()){
+                CursoReturnDTO cursoReturnDTO = new CursoReturnDTO();
+                cursoReturnDTO.setIdCurso(curso.getIdCurso());
+                cursoReturnDTO.setNome(curso.getNome());
+                cursoReturnDTO.setAreacurso(curso.getAreacurso());
+                cursoReturnDTOS.add(cursoReturnDTO);
+            }
+            professorCompletoDTO.setCursos(cursoReturnDTOS);
+        }
+        return professorCompletoDTO;
     }
 }

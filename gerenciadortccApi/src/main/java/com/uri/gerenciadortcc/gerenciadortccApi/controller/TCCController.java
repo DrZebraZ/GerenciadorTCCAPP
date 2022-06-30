@@ -1,6 +1,7 @@
 package com.uri.gerenciadortcc.gerenciadortccApi.controller;
 
 import com.uri.gerenciadortcc.gerenciadortccApi.controller.objects.TCCObject;
+import com.uri.gerenciadortcc.gerenciadortccApi.dto.TCCDTO;
 import com.uri.gerenciadortcc.gerenciadortccApi.model.entity.Doc;
 import com.uri.gerenciadortcc.gerenciadortccApi.model.entity.TCC;
 import com.uri.gerenciadortcc.gerenciadortccApi.service.DocStorageService;
@@ -35,8 +36,8 @@ public class TCCController {
     }
 
     @GetMapping("/{tccId}/getTCC")
-    private Optional<TCC> getTCC(@PathVariable("tccId")String tccId){
-        Optional<TCC> tcc = tccService.getTCC(Long.valueOf(tccId));
+    private TCCDTO getTCC(@PathVariable("tccId")String tccId){
+        TCCDTO tcc = tccService.getTCC(Long.valueOf(tccId));
         return tcc;
     }
 

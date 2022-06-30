@@ -2,6 +2,7 @@ package com.uri.gerenciadortcc.gerenciadortccApi.controller;
 
 import com.uri.gerenciadortcc.gerenciadortccApi.controller.objects.UsuarioObject;
 import com.uri.gerenciadortcc.gerenciadortccApi.controller.objects.loginObject;
+import com.uri.gerenciadortcc.gerenciadortccApi.dto.ProfessorCompletoDTO;
 import com.uri.gerenciadortcc.gerenciadortccApi.dto.ProfessorDTO;
 import com.uri.gerenciadortcc.gerenciadortccApi.model.entity.Professor;
 import com.uri.gerenciadortcc.gerenciadortccApi.service.DocStorageService;
@@ -29,8 +30,14 @@ public class ProfessorController {
     private DocStorageService docStorageService;
 
     @GetMapping("/login")
-    public Optional<Professor> executaLogin(@RequestBody loginObject login){
-        Optional<Professor> professor = professorService.Login(login.getEmail(), login.getSenha());
+    public ProfessorCompletoDTO executaLogin(@RequestBody loginObject login){
+        ProfessorCompletoDTO professor = professorService.Login(login.getEmail(), login.getSenha());
+        return professor;
+    }
+
+    @GetMapping("/{professorId}/getProfessor")
+    public ProfessorCompletoDTO getProfessor(@PathVariable("professorId") String professorId){
+        ProfessorCompletoDTO professor = professorService.getProfessor(Long.valueOf(professorId));
         return professor;
     }
 

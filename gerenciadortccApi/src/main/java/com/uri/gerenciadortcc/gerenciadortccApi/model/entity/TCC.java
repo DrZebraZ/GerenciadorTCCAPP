@@ -20,6 +20,9 @@ public class TCC {
     @GeneratedValue( strategy = GenerationType.IDENTITY )
     private Long idTCC;
 
+    @Column(name = "TITULO")
+    private String titulo;
+
     @Column(name = "DESCRICAO")
     private String descricao;
 

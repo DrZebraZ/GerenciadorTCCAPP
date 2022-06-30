@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 @Entity
@@ -22,7 +24,7 @@ public class DataOrientacao {
     private Long id;
 
     @Column(name = "DATA_ORIENTACAO")
-    private ZonedDateTime dataOrientacao;
+    private LocalDateTime dataOrientacao;
 
     @ManyToOne
     @JoinColumn(name = "ORIENTACAO_ID")

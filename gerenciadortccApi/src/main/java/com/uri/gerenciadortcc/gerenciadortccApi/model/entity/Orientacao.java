@@ -22,16 +22,22 @@ public class Orientacao {
     @GeneratedValue( strategy = GenerationType.IDENTITY )
     private Long idOrientacao;
 
+    @Column(name = "TITULO_TCC")
+    private String tituloTCC;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ALUNO_ID")
     private Aluno aluno;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "PROFESSOR_ID")
     private Professor professor;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "orientacao")
     private List<DataOrientacao> datasOrientacoes;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "orientacao")
+    private List<Comentarios> comentarios;
 
     @OneToOne(mappedBy = "orientacao")
     private Notificacao notificacao;

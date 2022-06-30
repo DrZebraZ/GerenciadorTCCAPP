@@ -26,8 +26,8 @@ public class Professor extends Usuario{
 	@Column(name = "COORDENADOR")
 	private Boolean coordenador;
 
-	@OneToOne(mappedBy = "professor")
-	private Orientacao orientacao;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "professor")
+	private List<Orientacao> orientacao;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "orientador")
 	private List<TCC> orientacoes;
