@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Navigate, NavLink } from 'react-router-dom';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
 import UsuarioService from '../app/service/UsuarioService';
 
 function Cadastro() {
@@ -18,6 +16,7 @@ function Cadastro() {
   const [listaCursos, setListaCursos] = useState([]);
   const [cadastrado, setCadastro] = useState(false);
   const [service, setService] = useState(new UsuarioService());
+  const [orientadores, setOrientadores] = useState()
 
   function cadastrar() {
     console.log(email)
@@ -54,6 +53,7 @@ function Cadastro() {
       console.log(lista)
     }
     fetchData();
+
   }, [])
 
   //REDUCE
@@ -110,16 +110,23 @@ function Cadastro() {
                   placeholder="Password"
                   onChange={e => setSenha(e.target.value)}
                 />
-                <label htmlFor="floatingPassword">Senha</label>
+                <label htmlFor="floatingPassword">Senha (min 8 digitos com Maiuscula e Minuscula)</label>
               </div>
               <div className="form-floating mb-1 pt-1">
-                <Autocomplete
-                  disablePortal
-                  id="use-autocomplete-demo"
-                  options={listaCursos}
-                  renderInput={(params) => <TextField {...params} style={{ borderRadius: 10, backgroundColor: "#FFFFFF" }} label="Curso" />}
-                  onChange={(e, newCurso) => setCurso(newCurso.key)}
-                />
+                <select style={{ borderRadius: "10px" }}
+                  className="form-select" 
+                  id="exampleSelect1" 
+                  value={curso} 
+                  onChange={(e) => setCurso(e.target.value)}
+                >
+                  <option key={0} value={0}>Selecione...</option>
+                  {listaCursos.map(opt => (
+                    <option key={opt.key} value={opt.key}>
+                      {opt.label}
+                    </option>))
+                  }
+                </select>
+                <label htmlFor="floatingInput">Curso</label>
               </div>
               <div className="row justify-content-center">
                 <div className="row">
