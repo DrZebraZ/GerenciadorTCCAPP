@@ -1,20 +1,26 @@
 import Janela from '../components/janela'
 import DatePicker from "react-datepicker";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 function Perfil() {
-  const [nome, setNome] = useState('Luis');
+  const [nome, setNome] = useState('seu nome');
   const [descricaoPessoal, setDescricaoPessoal] = useState('Coloque uma breve descrição sua aqui');
-  const [dataNasc, setDataNasc] = useState(new Date(setStartDate()));
+  const [dataNasc, setDataNasc] = useState(new Date());
   const [dataPlaceHolder, setDataPlaceHolder] = useState('');
   const [isLogged, setIsLogged] = useState(localStorage.getItem('_usuario_logado'))
 
-  function setStartDate() {
-    const Logado = JSON.parse(localStorage.getItem("_usuario_logado"))
-    return Logado && new Date(Logado.datanasc[0], (Logado.datanasc[1] - 1), Logado.datanasc[2])
 
-  }
-
+  useEffect(() => {
+    if(localStorage.getItem("_usuario_logado")){
+      const Logado = JSON.parse(localStorage.getItem("_usuario_logado"))
+      setNome(Logado.nome)
+      setDataNasc(new Date(Logado.datanasc[0], (Logado.datanasc[1] - 1), Logado.datanasc[2]))
+    } else if(localStorage.getItem("_professor_logado")){
+      const Logado = JSON.parse(localStorage.getItem("_professor_logado"))
+      setNome(Logado.nome)
+      setDataNasc(new Date(Logado.datanasc[0], (Logado.datanasc[1] - 1), Logado.datanasc[2]))
+    }
+  },[])
 
 
   return (

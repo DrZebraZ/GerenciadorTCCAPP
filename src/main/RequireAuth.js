@@ -4,6 +4,7 @@ import { useUserContext } from "../context/UserLogedContext"
 
 function RequireAuth({children}){
   const {isLogado} = useUserContext()
-  return isLogado? children : <Navigate to="/login"/>
+  const {isLogadoProf} = useUserContext()
+  return isLogado? children : isLogadoProf? children : <Navigate to="/login"/>
 }
 export default RequireAuth

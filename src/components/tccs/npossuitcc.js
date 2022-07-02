@@ -30,6 +30,7 @@ function NPossuiTCC(){
     const data = await response.data
     localStorage.removeItem('_tcc')
     localStorage.setItem('_tcc', JSON.stringify(response.data))
+    localStorage.setItem('_idTCC', JSON.stringify(response.data.id))
     if (docFile){
       let formData = new FormData()
       formData.append("file",docFile)

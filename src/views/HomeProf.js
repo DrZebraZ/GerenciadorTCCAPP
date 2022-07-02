@@ -1,7 +1,7 @@
 import React from 'react'
 import Janela from '../components/janela'
 import { Navigate } from 'react-router-dom'
-function Home() {
+function HomeProf() {
   /*if (!(localStorage.getItem("_usuario_logado"))){
       console.log("DESLOGADO")
       return <Navigate to="/login"/>
@@ -9,10 +9,11 @@ function Home() {
   return (
     <>
       <Janela>
-        input
+        
+        <h1>profe</h1>
       </Janela>
     </>
   )
 
 }
-export default Home
+export default HomeProf

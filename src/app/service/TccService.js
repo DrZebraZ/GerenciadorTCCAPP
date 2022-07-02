@@ -18,5 +18,13 @@ class TccService extends ApiService {
   addDocAoTCC(props, credenciais) {
     return this.post(`/add/${props.idTCC}/document`,credenciais)
   }
+
+  atualizarTCC(props, credenciais){
+    return this.put(`/${props.idTCC}/update`,credenciais)
+  }
+
+  atualizarDoc(props, credenciais){
+    return this.put(`/update/${props.idTCC}/document`, credenciais)
+  }
 }
 export default TccService

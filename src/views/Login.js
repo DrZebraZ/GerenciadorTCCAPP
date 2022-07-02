@@ -8,8 +8,6 @@ function Login() {
   const [email, setEmail] = useState();
   const [senha, setSenha] = useState();
   const [tipoUsuario, setTipoUsuario] = useState();
-  const [isLogged, setIsLogged] = useState(false);
-  const [service, setService] = useState(new UsuarioService());
 
   const { login } = useUserContext()
 

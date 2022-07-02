@@ -4,7 +4,7 @@ import Deslogar from './deslogar'
 import { useNavigate, } from 'react-router-dom'
 import { textAlign } from "@mui/system";
 import { Navbar, Container, NavbarBrand, Nav, NavDropdown, Form, FormControl, Button } from "react-bootstrap";
-function NavBar() {
+function NavBarProfessor() {
   let navigate = useNavigate();
   const [nomePagina, setNomePagina] = useState(window.location.pathname);
   const [tcc, setTCC] = useState()
@@ -14,9 +14,10 @@ function NavBar() {
       return {
         backgroundColor: "white",
         color: "Black",
+        textAlign: "center",
         border: "0.5px solid black",
         borderRadius: "10px",
-        width: 80,
+        width: "120%",
         padding: "12px",
         fontSize: 16,
         fontWeight: 900,
@@ -36,7 +37,7 @@ function NavBar() {
               style={{ maxHeight: '100px' }}
               navbarScroll
             >
-              <NavbarItem className="nav-link" href="/tcc" label="TCC" style={alteraEstilo({ nome: "/tcc" })} />
+              <NavbarItem className="nav-link" href="/orientacao" label="Orientação" style={alteraEstilo({ nome: "/orientacao" })} />
             </Nav>
             <div className="align-end">
               <ul className="navbar-nav me-auto">
@@ -53,7 +54,7 @@ function NavBar() {
   )
 }
 
-export default NavBar
+export default NavBarProfessor
 
 /* DROPDOWN BUTTON
  <NavDropdown title="DROPDAWN" id="navbarScrollingDropdown">

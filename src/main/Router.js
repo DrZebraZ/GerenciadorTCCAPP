@@ -6,6 +6,7 @@ import Perfil from '../views/Perfil'
 import Tcc from '../views/Tcc'
 import RequireAuth from './RequireAuth'
 import { UserLogedContextProvider } from '../context/UserLogedContext'
+import Orientacao from '../views/Orientacao'
 
 /*export default function Router(){
   return(
@@ -33,6 +34,7 @@ export default function Router() {
           <Route path="/home" element={<RequireAuth><Home /></RequireAuth>} />
           <Route path="/perfil" element={<RequireAuth><Perfil /></RequireAuth>} />
           <Route path="/tcc" element={<RequireAuth><Tcc /></RequireAuth>} />
+          <Route path="/orientacao" element={<RequireAuth><Orientacao /></RequireAuth>} />
           <Route path="/login" element={<Login />} />
           <Route path="/cadastro" element={<Cadastro />} />
         </Routes>
