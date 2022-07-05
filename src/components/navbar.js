@@ -37,6 +37,7 @@ function NavBar() {
               navbarScroll
             >
               <NavbarItem className="nav-link" href="/tcc" label="TCC" style={alteraEstilo({ nome: "/tcc" })} />
+              <NavbarItem className="nav-link" href="/orientacao" label="Orientação" style={alteraEstilo({ nome: "/orientacao" })} />
             </Nav>
             <div className="align-end">
               <ul className="navbar-nav me-auto">

@@ -37,7 +37,7 @@ function NavBarProfessor() {
               style={{ maxHeight: '100px' }}
               navbarScroll
             >
-              <NavbarItem className="nav-link" href="/orientacao" label="Orientação" style={alteraEstilo({ nome: "/orientacao" })} />
+              <NavbarItem className="nav-link" href="/orientacaoprofessor" label="Orientação" style={alteraEstilo({ nome: "/orientacaoprofessor" })} />
             </Nav>
             <div className="align-end">
               <ul className="navbar-nav me-auto">

@@ -21,17 +21,20 @@ function NPossuiTCC(){
   const Navigate = useNavigate()
   
   async function CadastraTCC(){
+    console.log(tituloTcc, " ",descricao, " ", orientador," ", usuarioID)
     const response = await tccService.adicionarTCC({
       "titulo":tituloTcc,
       "descricao":descricao,
       "professorId":orientador,
       "alunoId":usuarioID
     })
+    console.log("postou")
     const data = await response.data
     localStorage.removeItem('_tcc')
     localStorage.setItem('_tcc', JSON.stringify(response.data))
     localStorage.setItem('_idTCC', JSON.stringify(response.data.id))
     if (docFile){
+      console.log(docFile)
       let formData = new FormData()
       formData.append("file",docFile)
       const salvatcc = await tccService.addDocAoTCC({"idTCC":response.data.id},formData)
