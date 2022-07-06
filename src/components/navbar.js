@@ -14,9 +14,10 @@ function NavBar() {
       return {
         backgroundColor: "white",
         color: "Black",
+        textAlign: "center",
         border: "0.5px solid black",
         borderRadius: "10px",
-        width: 80,
+        width: "120%",
         padding: "12px",
         fontSize: 16,
         fontWeight: 900,

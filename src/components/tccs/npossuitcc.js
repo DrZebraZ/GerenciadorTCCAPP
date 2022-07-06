@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ProfessorService from "../../app/service/ProfessorService";
 import TccService from "../../app/service/TccService";
@@ -20,6 +20,38 @@ function NPossuiTCC(){
   const [usuarioID, setUsuarioID] = useState()
   const Navigate = useNavigate()
   
+
+  useEffect(()=> {
+    async function setaIdCurso(){
+      console.log("SETA IDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD")
+      const Logado = await JSON.parse(localStorage.getItem("_usuario_logado"))
+      setIdCurso(Logado.idCurso)
+      setUsuarioID(Logado.id)
+      return(Logado.idCurso)
+    }
+    async function procuraListaProfessores(){
+      async function procuraCursos(){
+        const idcurso = await setaIdCurso()
+        console.log(idcurso)
+        const response = await service.getListaProfessores({"idCurso" : idcurso})
+        console.log("1",response)
+        const data = await response.data
+        console.log("2",data)
+        const lista = data.map(objeto => ({ nome: objeto.nome, key: objeto.id }))
+        console.log(lista)
+        setOrientadores(lista)
+        console.log("orientadores", orientadores) 
+        setCarregado(true)
+      }
+      procuraCursos()
+    }
+    procuraListaProfessores()
+  },[])
+
+  useEffect(()=>{
+    console.log("TROCOU ORIENTADOR: ",orientador)
+  },[orientador])
+
   async function CadastraTCC(){
     console.log(tituloTcc, " ",descricao, " ", orientador," ", usuarioID)
     const response = await tccService.adicionarTCC({
@@ -42,30 +74,8 @@ function NPossuiTCC(){
     Navigate("/home")
   }
 
-  async function setaIdCurso(){
-    const Logado = await JSON.parse(localStorage.getItem("_usuario_logado"))
-    setIdCurso(Logado.idCurso)
-    setUsuarioID(Logado.id)
-  }
-
-  async function procuraListaProfessores(){
-    async function procuraCursos(){
-      await setaIdCurso()
-      const response = await service.getListaProfessores({"idCurso" : idCurso})
-      console.log("1",response)
-      const data = await response.data
-      console.log("2",data)
-      const lista = data.map(objeto => ({ nome: objeto.nome, key: objeto.id }))
-      console.log(lista)
-      setOrientadores(lista)
-      console.log("orientadores", orientadores)  
-      setCarregado(true)
-    }
-    procuraCursos()
-  }
 
   if (!carregado){
-    procuraListaProfessores()
     return (
       <h1>carregando...</h1>
     )

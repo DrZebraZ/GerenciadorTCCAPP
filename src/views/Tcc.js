@@ -8,7 +8,7 @@ function Tcc() {
   const [service, setService] = useState(new TccService())
 
   const [tcc, setTCC] = useState(JSON.parse(localStorage.getItem("_tcc")))
-  const [idTCC, setIdTCC] = useState()
+  const [idTCC, setIdTCC] = useState(localStorage.getItem("_idTCC"))
   const [tituloTcc, setTituloTcc] = useState("Defesa")
   const [descricao, setDescricao] = useState("")
 
@@ -20,12 +20,13 @@ function Tcc() {
 
   const [possuiTCC, setPossuiTCC] = useState(false)
   const [setado, setSetado] = useState(false)
+
   useEffect(() => {
     async function setaTCC(){
       
     setTCC(JSON.parse(localStorage.getItem("_tcc")))
       try {
-        const response = await service.pegarTCC({"idTCC":tcc.idTCC})
+        const response = await service.pegarTCC({"idTCC":idTCC})
         const data = await response.data
         console.log(data)
         setTituloTcc(data.titulo)
@@ -48,20 +49,20 @@ function Tcc() {
   async function AtualizarTCC(){
     console.log("tituloTCC")
     console.log("descricao")
-    const response = await service.atualizarTCC({"idTCC":tcc.idTCC},{
+    const response = await service.atualizarTCC({"idTCC":idTCC},{
       "titulo":tituloTcc,
       "descricao":descricao,
       "professorId":orientador,
-      "alunoId":tcc.idTCC
+      "alunoId": JSON.parse(localStorage.getItem("_usuario_logado")).id
     })
-    const data = await response.data
-    console.log(data)
+    const data = response.data
+    console.log("DATA ATT", data)
     if (docFile){
       console.log(docFile)
       let formData = new FormData()
       formData.append("file",docFile)
       console.log(formData)
-      const salvatcc = await service.atualizarDoc({"idTCC":tcc.idTCC},formData)
+      const salvatcc = await service.atualizarDoc({"idTCC":idTCC},formData)
       const data = await salvatcc.data
       console.log(data)
     }
@@ -74,7 +75,7 @@ function Tcc() {
       <h1>Carregando...</h1>
     )
   }else{
-    if (!possuiTCC){
+    if (!idTCC){
     return (
       <>
         <NPossuiTCC/>

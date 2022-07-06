@@ -1,23 +1,21 @@
 import React, { useState } from 'react'
 import Janela from '../components/janela'
 import { NavLink } from 'react-router-dom'
+import Chat from '../components/chat'
 function Orientacao() {
-  const [usuariologado, setUsuarioLogado] = useState(localStorage.getItem("_professor_logado"))
+  const [professorlogado, setProfessorLogado] = useState(localStorage.getItem("_professor_logado"))
   const [idAluno, setIdAluno] = useState()
   const [idProfessor, setIdProfessor] = useState()
-  
 
-  if (usuariologado){
+  if (professorlogado){
     return(
       <NavLink to="/home"/>
     )
   }
-
-
   return (
     <>
       <Janela>
-        orientacao
+        <Chat idTCC={localStorage.getItem("_idTCC")}/>
       </Janela>
     </>
   )

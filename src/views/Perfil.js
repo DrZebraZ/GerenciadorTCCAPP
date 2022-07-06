@@ -58,12 +58,12 @@ function Perfil() {
                   style={{fontSize: 20, color: "black" }} 
                 > Data Nascimento </label>
                 <DatePicker
-                    className="form-control rounded-pill"
-                    dateFormat="dd/MMM/yyyy"
-                    onChange={(date) => { setDataNasc(date) }}
-                    selected={dataNasc}
-                    type="nome"
-                    placeholder="Data Nascimento"
+                  className="form-control rounded-pill"
+                  dateFormat="dd/MMM/yyyy"
+                  onChange={(date) => { setDataNasc(date) }}
+                  selected={dataNasc}
+                  type="nome"
+                  placeholder="Data Nascimento"
                 />
               </div>
               <div className="col col-4 align-self-end">
